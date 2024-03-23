@@ -1,0 +1,7 @@
+.notFound{
+    background-color: #f9dcdf;
+    margin: 40px;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}

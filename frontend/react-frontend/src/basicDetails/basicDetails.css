@@ -1,0 +1,94 @@
+.stock-card {
+    display: flex;
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
+
+    justify-content: center;
+    align-items: center;
+    /* padding: 20px; */
+    height: max-content;
+    width: 100%;
+
+    /* width: 20%;  */
+  }
+
+.stock-header {
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: center;
+  /* width: 100%; */
+}
+
+.stock-symbol {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.stock-favorite {
+  color: gold;
+}
+
+.stock-name {
+  font-size: 1rem;
+}
+
+.stock-exchange {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+/* //手动加的 */
+.stock-body{
+  margin: 50px;
+
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.stock-logo {
+  width: 50px; /* Adjust as necessary */
+}
+
+.stock-price {
+  margin: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin-bottom: 15px;
+}
+
+.current-price {
+  font-size: 1.5rem;
+  color: green;
+  margin-right: 5px;
+}
+
+.price-change {
+  font-size: 1rem;
+  color: green;
+}
+
+.time-status {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.buy-button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
