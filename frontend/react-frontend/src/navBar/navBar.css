@@ -1,0 +1,10 @@
+.navBar{
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: #2729b3;
+
+}
+
+.nav-link{
+    color: white;
+}
