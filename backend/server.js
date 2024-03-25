@@ -63,14 +63,14 @@ app.get('/companyLatestPriceOfStock', async(req, res) => {
         console.log(response.data)
 
         const modifiedStocks = {
-            'Current Price': response.data.c,
+            'currentPrice': response.data.c,
             'Change': response.data.d,
-            'Percentage Change': response.data.dp,
-            'High Price': response.data.h,
-            'Low Price': response.data.l,
-            'Opening Price': response.data.o,
-            'Previous Closing Price': response.data.pc,
-            'Trading Day': response.data.t
+            'percentageChange': response.data.dp,
+            'highPrice': response.data.h,
+            'lowPrice': response.data.l,
+            'openingPrice': response.data.o,
+            'previousClosingPrice': response.data.pc,
+            'tradingDay': response.data.t
         }
 
 

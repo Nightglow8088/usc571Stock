@@ -4,7 +4,7 @@ import FreeSoloCreateOption from './inputForm.js'
 import './form.css'
 
 export default function Form({ stockName, setStockName }) {
-  const [value, setValue] = React.useState(null);
+  const [value, setValue] = React.useState('');
 
 
   return (

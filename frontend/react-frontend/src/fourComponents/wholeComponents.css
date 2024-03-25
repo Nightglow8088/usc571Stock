@@ -1,0 +1,40 @@
+* wholeComponents.css */
+.dashboard {
+  font-family: 'Arial', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto; /* Center the dashboard in the middle of the page */
+}
+
+.button-group {
+  display: flex;
+  justify-content: center; /* Center buttons in the middle of the button-group */
+  margin-top: 20px; /* Space above the button group */
+  margin-bottom: 40px; /* Space below the button group */
+}
+
+.button-group button {
+  padding: 10px 20px;
+  border: 1px solid #d1d1d1; /* Add border */
+  border-right: none; /* Remove right border */
+  background-color: #f8f8f8; /* Light grey background */
+  color: #333; /* Dark grey text */
+  text-transform: uppercase; /* Capitalize letters */
+  font-weight: bold; /* Make font bold */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Add right border back on the last button */
+.button-group button:last-child {
+  border-right: 1px solid #d1d1d1;
+}
+
+.button-group button:hover {
+  background-color: #e0e0e0; /* Darken button on hover */
+}
+
+.button-group button.active {
+  background-color: #007bff; /* Use a blue background for the active button */
+  color: white; /* White text for the active button */
+  border-color: #007bff; /* Border color for active button */
+}

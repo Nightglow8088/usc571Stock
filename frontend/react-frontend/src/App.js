@@ -1,20 +1,36 @@
-import React from 'react'
+import React from 'react' 
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import NavBar from './navBar/navBar'
-import Form from './input/form'
 import BasicDetails from './basicDetails/basicDetails'
+import WholePage from './wholePages/wholePages'
+
+function Routers() {
+  return (
+    
+    <Routes>
+        {/* <Route path="/" element={ <WholePage/> } /> */}
+        {/* <Route path="/search/home" Component={ WholePage } /> */}
+        <Route path="/search/:ticker" Component={ BasicDetails } />
+        {/* <Route path="" element={ <Contact/> } /> */}
+    </Routes>
+  )
+}
+
 
 function App() {
-  const [stockName, setStockName] = React.useState('');
+  // const [stockName, setStockName] = React.useState('');
 
 
   return (
-    <>
+    <BrowserRouter>
       <NavBar />
-      <Form stockName={stockName} setStockName={setStockName}/>
-      <BasicDetails />
-    </>
+      <WholePage />
+
+      <Routers/>
+
+   </BrowserRouter>
   );
 }
 

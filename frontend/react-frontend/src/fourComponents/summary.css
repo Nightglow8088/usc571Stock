@@ -1,0 +1,39 @@
+.stock-details-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  
+  .summary-section {
+    width: 40%; 
+    /* Adjust width as needed */
+  }
+  
+  .price-info {
+    /* background: #f8f8f8; */
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .company-info {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    /* padding: 20px; */
+    /* background: #f8f8f8; */
+  }
+  
+  .company-info h2 {
+    margin-bottom: 10px;
+  }
+  
+  .chart-section {
+    width: 40%;
+     /* Adjust width as needed */
+    /* Add styles for your chart container */
+  }
+  
+  /* Add any additional styling as needed */
+  
