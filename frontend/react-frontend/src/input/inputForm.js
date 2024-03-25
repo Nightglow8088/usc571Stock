@@ -24,8 +24,10 @@ function FreeSoloCreateOption({ value, setValue }) {
     const [showEmptyResult, setShowEmptyResult] = React.useState(false);
 
     React.useEffect(() => {
-        console.log("change ticker "+ticker)
-        setValue(ticker);
+        if(ticker!='home'){
+            console.log("change ticker "+ticker)
+            setValue(ticker);
+        }
     },[ticker, setValue])
 
 

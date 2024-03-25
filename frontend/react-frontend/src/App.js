@@ -1,5 +1,5 @@
 import React from 'react' 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
 
 import './App.css';
 import NavBar from './navBar/navBar'
@@ -20,13 +20,10 @@ function Routers() {
 
 
 function App() {
-  // const [stockName, setStockName] = React.useState('');
-
 
   return (
     <BrowserRouter>
       <NavBar />
-      <WholePage />
 
       <Routers/>
 

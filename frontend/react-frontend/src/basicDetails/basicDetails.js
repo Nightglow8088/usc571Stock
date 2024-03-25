@@ -2,6 +2,8 @@ import React from 'react'
 import './basicDetails.css'
 import { Routes, Route, useParams } from 'react-router-dom';
 import WholeComponents from '../fourComponents/wholeComponents';
+import WholePage from '../wholePages/wholePages';
+
 
 
 export default function BasicDetails() {
@@ -44,7 +46,7 @@ export default function BasicDetails() {
 
     React.useEffect(() => {
         if(ticker!='home'){
-            console.log("ticker change: "+ticker)
+            // console.log("ticker change: "+ticker)
             const fetchDescription = fetch(`http://127.0.0.1:3000/companyDescription?ticker=${ticker}`)
                 .then(response => response.json());
 
@@ -66,26 +68,11 @@ export default function BasicDetails() {
                 console.error('Error fetching data:', error);
             });
 
-
-            // fetch('http://127.0.0.1:3000/companyDescription?ticker='+ticker)
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             throw new Error('Network response was not ok');
-            //         }
-            //         return response.json();
-            //     })
-            //     .then(data => {
-            //         setDetail(data);
-            //     })
-            //     .catch(error => {
-            //         console.error('Error fetching data:', error);
-
-            //     });
         }
       }, [ticker]); 
 
     if(ticker=='home'){
-        return null;
+        console.log("为home")
     }
 
 
@@ -93,42 +80,46 @@ export default function BasicDetails() {
 
   return (
     <>
-        {/* <Form stockName={stockName} setStockName={setStockName}/> */}
-        <div className="stock-card">
+        <WholePage />
+        {ticker !== 'home' && (
+        <>
+            <div className="stock-card">
 
-            <div className="stock-header">
-                <div>
-                    <span className="stock-symbol">{ticker.toUpperCase()}</span>
-                    <span className="stock-favorite">&#9733;</span>
+                <div className="stock-header">
+                    <div>
+                        <span className="stock-symbol">{ticker.toUpperCase()}</span>
+                        <span className="stock-favorite">&#9733;</span>
+                    </div>
+                    <span className="stock-name">{detail?.name || null}</span>
+                    <div className="stock-exchange">{detail?.exchange || null}</div>
+                    <div>
+                        <button className="buy-button">Buy</button>
+                        <button className="buy-button">Sell</button>
+                    </div>
                 </div>
-                <span className="stock-name">{detail?.name || null}</span>
-                <div className="stock-exchange">{detail?.exchange || null}</div>
-                <div>
-                    <button className="buy-button">Buy</button>
-                    <button className="buy-button">Sell</button>
+
+                <div className="stock-body">
+                    <img className="stock-logo" src={detail?.logo || null} alt="Logo"></img>
+                    <span className={`market-status ${marketOpen ? 'greenWords' : 'redWords'}`}>
+                        {latestPrice? ( marketOpen ? 'Market is Open' : 'Market closed on ' +unixToDate(latestPrice.tradingDay) ) : null }
+                    </span>
                 </div>
+
+                <div className="stock-price">
+                    <span className={`current-price ${positiveChange ? 'greenWords' : 'redWords'}`}>{latestPrice?.previousClosingPrice || null}</span>
+                    <span className={`price-change ${positiveChange ? 'greenWords' : 'redWords'}`}> {latestPrice?( positiveChange? "▲" + latestPrice.Change  : "▼" + latestPrice.Change ) : null} ({latestPrice?.percentageChange || null}%)</span>
+                    <div className="time-status">
+                    <   span className="timestamp">{latestPrice?unixToDate(Math.round(new Date().getTime()/1000)) : null}</span>
+                    </div>
+                </div>
+
             </div>
 
-            <div className="stock-body">
-                <img className="stock-logo" src={detail?.logo || null} alt="Logo"></img>
-                <span className={`market-status ${marketOpen ? 'greenWords' : 'redWords'}`}>
-                    {latestPrice? ( marketOpen ? 'Market is Open' : 'Market closed on ' +unixToDate(latestPrice.tradingDay) ) : null }
-                </span>
+            <div>
+                <WholeComponents ticker={ticker} latestPrice={latestPrice} detail={detail} companyPeers={companyPeers}/>
             </div>
-
-            <div className="stock-price">
-                <span className={`current-price ${positiveChange ? 'greenWords' : 'redWords'}`}>{latestPrice?.previousClosingPrice || null}</span>
-                <span className={`price-change ${positiveChange ? 'greenWords' : 'redWords'}`}> {latestPrice?( positiveChange? "▲" + latestPrice.Change  : "▼" + latestPrice.Change ) : null} ({latestPrice?.percentageChange || null}%)</span>
-                <div className="time-status">
-                <   span className="timestamp">{latestPrice?unixToDate(Math.round(new Date().getTime()/1000)) : null}</span>
-                </div>
-            </div>
-
-        </div>
-
-        <div>
-            <WholeComponents ticker={ticker} latestPrice={latestPrice} detail={detail} companyPeers={companyPeers}/>
-        </div>
+        </>
+        )}
     </>
   )
 }

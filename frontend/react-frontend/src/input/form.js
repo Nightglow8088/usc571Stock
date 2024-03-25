@@ -10,7 +10,7 @@ export default function Form({ stockName, setStockName }) {
   return (
     <div className="form">
         <div className="inputArea">
-          <FreeSoloCreateOption value={value} setValue={setValue}/>
+          <FreeSoloCreateOption value={value} setValue={setValue} />
         </div>
         <div className='buttonGroupArea'>
           <Buttons value={value} stockName={stockName} setStockName={setStockName}/>
