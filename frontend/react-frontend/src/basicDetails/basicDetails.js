@@ -52,27 +52,27 @@ export default function BasicDetails() {
     React.useEffect(() => {
         if(ticker!='home'){
             // console.log("ticker change: "+ticker)
-            const fetchDescription = fetch(`http://127.0.0.1:3000/companyDescription?ticker=${ticker}`)
+            const fetchDescription = fetch(`${process.env.REACT_APP_API_URL}/companyDescription?ticker=${ticker}`)
                 .then(response => response.json());
 
-            const fetchLatestPrice = fetch(`http://127.0.0.1:3000/companyLatestPriceOfStock?symbol=${ticker}`)
+            const fetchLatestPrice = fetch(`${process.env.REACT_APP_API_URL}/companyLatestPriceOfStock?symbol=${ticker}`)
                 .then(response => response.json());
 
-            const fetchCompanyPeers = fetch(`http://127.0.0.1:3000/companyPeers?symbol=${ticker}`)
+            const fetchCompanyPeers = fetch(`${process.env.REACT_APP_API_URL}/companyPeers?symbol=${ticker}`)
                 .then(response => response.json());
-            console.log(`http://127.0.0.1:3000/companyNews?symbol=${ticker}&from=2023-01-15&to=${new Date().toISOString().split('T')[0]}`)
+            // console.log(`http://127.0.0.1:3000/companyNews?symbol=${ticker}&from=2023-01-15&to=${new Date().toISOString().split('T')[0]}`)
 
-            const fetchCompanyNews = fetch(`http://127.0.0.1:3000/companyNews?symbol=${ticker}&from=2023-01-15&to=${new Date().toISOString().split('T')[0]}`)
+            const fetchCompanyNews = fetch(`${process.env.REACT_APP_API_URL}/companyNews?symbol=${ticker}&from=2023-01-15&to=${new Date().toISOString().split('T')[0]}`)
                 .then(response=> response.json())
 
             
-            const fetchCompanyInsiderSentiment = fetch(`http://127.0.0.1:3000/companyInsiderSentiment?symbol=${ticker}`)
+            const fetchCompanyInsiderSentiment = fetch(`${process.env.REACT_APP_API_URL}/companyInsiderSentiment?symbol=${ticker}`)
                 .then(response=> response.json())
 
-            const fetchRecommendationTrends = fetch(`http://127.0.0.1:3000/recommendationTrends?symbol=${ticker}`)
+            const fetchRecommendationTrends = fetch(`${process.env.REACT_APP_API_URL}/recommendationTrends?symbol=${ticker}`)
                 .then(response=> response.json())
 
-            const fetchCompanyEarnings = fetch(`http://127.0.0.1:3000/companyEarnings?symbol=${ticker}`)
+            const fetchCompanyEarnings = fetch(`${process.env.REACT_APP_API_URL}/companyEarnings?symbol=${ticker}`)
                 .then(response=> response.json())
 
             Promise.all([fetchDescription, fetchLatestPrice,fetchCompanyPeers,fetchCompanyNews,fetchCompanyInsiderSentiment,fetchRecommendationTrends,fetchCompanyEarnings])

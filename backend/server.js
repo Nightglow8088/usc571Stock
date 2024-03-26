@@ -19,9 +19,9 @@ const corsOptions ={
 
 app.use(cors(corsOptions)) // Use this after the variable declaration
  
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello World!');
+// });
 
 app.get('/companyDescription', async(req, res) => {
     const { ticker } = req.query; 
@@ -166,7 +166,7 @@ app.get('/companyEarnings', async(req, res) => {
 });
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
  
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
