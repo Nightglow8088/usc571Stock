@@ -3,7 +3,7 @@ import InsightsBarChart from './insightsBarChart';
 import InsightsInvertedLineChart from './insightsInvertedLineChart';
 import './insights.css'
 
-export default function Insights({companyInsiderSentiment}) {
+export default function Insights({companyInsiderSentiment, recommendationTrends}) {
     const [aggregated, setAggregated] = React.useState({
       totalMspr: 0,
       positiveMspr: 0,
@@ -94,7 +94,7 @@ export default function Insights({companyInsiderSentiment}) {
 
           <div className='charts'>
             <div className="recommendation-trends-chart">
-                <InsightsBarChart />
+                <InsightsBarChart recommendationTrends={recommendationTrends}/>
                 {/* <h2>Recommendation Trends</h2> */}
                 {/* <HighchartsReact highcharts={Highcharts} options={recommendationTrendsOptions} /> */}
             </div>

@@ -13,6 +13,7 @@ export default function BasicDetails() {
     const [companyPeers, setCompanyPeers] = React.useState(null);
     const [companyNews, setCompanyNews] = React.useState(null);
     const [companyInsiderSentiment, setCompanyInsiderSentiment] = React.useState(null);
+    const [recommendationTrends, setRecommendationTrends] = React.useState(null);
 
     
     const [marketOpen, setMarketOpen] = React.useState(false);
@@ -66,8 +67,11 @@ export default function BasicDetails() {
             const fetchCompanyInsiderSentiment = fetch(`http://127.0.0.1:3000/companyInsiderSentiment?symbol=${ticker}`)
                 .then(response=> response.json())
 
-            Promise.all([fetchDescription, fetchLatestPrice,fetchCompanyPeers,fetchCompanyNews,fetchCompanyInsiderSentiment])
-            .then(([descriptionData, latestPriceData,companyPeersData,companyNewsData,companyInsiderSentimentData]) => {
+            const fetchRecommendationTrends = fetch(`http://127.0.0.1:3000/recommendationTrends?symbol=${ticker}`)
+                .then(response=> response.json())
+
+            Promise.all([fetchDescription, fetchLatestPrice,fetchCompanyPeers,fetchCompanyNews,fetchCompanyInsiderSentiment,fetchRecommendationTrends])
+            .then(([descriptionData, latestPriceData,companyPeersData,companyNewsData,companyInsiderSentimentData,recommendationTrendsData]) => {
                 sameDateOrNot(latestPriceData.tradingDay)
                 setPositiveChange(latestPriceData.Change>=0)
                 
@@ -76,6 +80,7 @@ export default function BasicDetails() {
                 setLatestPrice(latestPriceData);
                 setCompanyNews(companyNewsData)
                 setCompanyInsiderSentiment(companyInsiderSentimentData)
+                setRecommendationTrends(recommendationTrendsData)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -129,7 +134,8 @@ export default function BasicDetails() {
             </div>
 
             <div>
-                <WholeComponents ticker={ticker} latestPrice={latestPrice} detail={detail} companyPeers={companyPeers} companyNews={companyNews} companyInsiderSentiment={companyInsiderSentiment}/>
+                <WholeComponents ticker={ticker} latestPrice={latestPrice} detail={detail} companyPeers={companyPeers}
+                                 companyNews={companyNews} companyInsiderSentiment={companyInsiderSentiment} recommendationTrends={recommendationTrends}/>
             </div>
         </>
         )}

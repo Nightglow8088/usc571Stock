@@ -7,7 +7,7 @@ import './wholeComponents.css'
 
 
 
-function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,companyInsiderSentiment}) {
+function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,companyInsiderSentiment,recommendationTrends}) {
     const [activeComponent, setActiveComponent] = React.useState('summary');
     console.log(latestPrice)
     // 渲染对应的组件
@@ -20,7 +20,7 @@ function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,co
         // case 'charts':
         //   return <ChartsComponent />;
         case 'insights':
-          return <Insights companyInsiderSentiment={companyInsiderSentiment} />;
+          return <Insights companyInsiderSentiment={companyInsiderSentiment} recommendationTrends={recommendationTrends}/>;
         default:
         //   return <SummaryComponent />;
       }

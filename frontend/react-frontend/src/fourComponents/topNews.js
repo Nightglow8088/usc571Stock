@@ -8,8 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function TopNews({companyNews}) {
 
-
-        // ... add other articles
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [newsValue, setNewsValue] = React.useState(null);
 
@@ -18,7 +16,7 @@ export default function TopNews({companyNews}) {
     const handleOpen = (article) => {
         setIsModalOpen(true);
         setNewsValue(article)
-      };
+    };
 
     function unixToDate (unixTimestamp){
         const date = new Date(unixTimestamp * 1000);
@@ -92,16 +90,6 @@ export default function TopNews({companyNews}) {
 
         }
 
-
-
     </div>
-    // <div className="news-grid-container">
-    //     {newsArticles.map((article) => (
-    //         <div className="news-article" key={article.id}>
-    //         <img src={article.image} alt={article.title} className="news-image" />
-    //         <p className="news-title">{article.title}</p>
-    //         </div>
-    //     ))}
-    // </div>
   )
 }

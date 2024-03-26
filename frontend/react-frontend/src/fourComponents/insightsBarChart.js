@@ -2,20 +2,53 @@ import React from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
-export default function InsightsBarChart() {
+
+const processDataForChart = (data) => {
+  // Sort data by period
+  const sortedData = data.sort((a, b) => new Date(a.period) - new Date(b.period));
+  
+  // Map through the data to create the series
+  const categories = sortedData.map(item => item.period);
+  const buy = sortedData.map(item => item.buy);
+  const hold = sortedData.map(item => item.hold);
+  const sell = sortedData.map(item => item.sell);
+  const strongBuy = sortedData.map(item => item.strongBuy);
+  const strongSell = sortedData.map(item => item.strongSell);
+  
+  return {
+    categories,
+    series: [
+      { name: 'Buy', data: buy },
+      { name: 'Hold', data: hold },
+      { name: 'Sell', data: sell },
+      { name: 'Strong Buy', data: strongBuy },
+      { name: 'Strong Sell', data: strongSell },
+    ]
+  };
+};
+
+export default function InsightsBarChart({recommendationTrends}) {
+  if (!recommendationTrends ) {
+    return ;
+  }
+  const { categories, series } = processDataForChart(recommendationTrends);
+  console.log(categories)
+  console.log(series)
+
+
 
   const options = {
     chart: {
       type: 'column'
     },
     title: {
-        text: 'Domestic passenger transport by mode of transport, Norway',
-        align: 'left'
+        text: 'Recommendation Trends',
+        align: 'center'
     },
-    subtitle: {
-        text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/landtransport/statistikk/innenlandsk-transport">SSB</a>',
-        align: 'left'
-    },
+    // subtitle: {
+    //     text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/landtransport/statistikk/innenlandsk-transport">SSB</a>',
+    //     align: 'left'
+    // },
     xAxis: {
         categories: ['2019', '2020', '2021']
     },
@@ -39,16 +72,16 @@ export default function InsightsBarChart() {
         }
     },
     series: [{
-        name: 'Road',
+        name: 'Strong Buy',
         data: [434, 290, 307]
     }, {
-        name: 'Rail',
+        name: 'Buy',
         data: [272, 153, 156]
     }, {
-        name: 'Air',
+        name: 'Hold',
         data: [13, 7, 8]
     }, {
-        name: 'Sea',
+        name: 'Sell',
         data: [55, 35, 41]
     }]
     
