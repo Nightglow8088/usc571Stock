@@ -3,7 +3,7 @@ import InsightsBarChart from './insightsBarChart';
 import InsightsInvertedLineChart from './insightsInvertedLineChart';
 import './insights.css'
 
-export default function Insights({companyInsiderSentiment, recommendationTrends}) {
+export default function Insights({companyInsiderSentiment, recommendationTrends,companyEarnings}) {
     const [aggregated, setAggregated] = React.useState({
       totalMspr: 0,
       positiveMspr: 0,
@@ -100,7 +100,7 @@ export default function Insights({companyInsiderSentiment, recommendationTrends}
             </div>
 
             <div className="eps-surprises-chart">
-              <InsightsInvertedLineChart />
+              <InsightsInvertedLineChart companyEarnings={companyEarnings}/>
                 {/* <h2>Historical EPS Surprises</h2> */}
                 {/* <HighchartsReact highcharts={Highcharts} options={epsSurprisesOptions} /> */}
             </div>

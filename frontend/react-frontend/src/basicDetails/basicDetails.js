@@ -14,6 +14,8 @@ export default function BasicDetails() {
     const [companyNews, setCompanyNews] = React.useState(null);
     const [companyInsiderSentiment, setCompanyInsiderSentiment] = React.useState(null);
     const [recommendationTrends, setRecommendationTrends] = React.useState(null);
+    const [companyEarnings, setCompanyEarnings] = React.useState(null);
+
 
     
     const [marketOpen, setMarketOpen] = React.useState(false);
@@ -70,8 +72,11 @@ export default function BasicDetails() {
             const fetchRecommendationTrends = fetch(`http://127.0.0.1:3000/recommendationTrends?symbol=${ticker}`)
                 .then(response=> response.json())
 
-            Promise.all([fetchDescription, fetchLatestPrice,fetchCompanyPeers,fetchCompanyNews,fetchCompanyInsiderSentiment,fetchRecommendationTrends])
-            .then(([descriptionData, latestPriceData,companyPeersData,companyNewsData,companyInsiderSentimentData,recommendationTrendsData]) => {
+            const fetchCompanyEarnings = fetch(`http://127.0.0.1:3000/companyEarnings?symbol=${ticker}`)
+                .then(response=> response.json())
+
+            Promise.all([fetchDescription, fetchLatestPrice,fetchCompanyPeers,fetchCompanyNews,fetchCompanyInsiderSentiment,fetchRecommendationTrends,fetchCompanyEarnings])
+            .then(([descriptionData, latestPriceData,companyPeersData,companyNewsData,companyInsiderSentimentData,recommendationTrendsData,companyEarningsData]) => {
                 sameDateOrNot(latestPriceData.tradingDay)
                 setPositiveChange(latestPriceData.Change>=0)
                 
@@ -81,6 +86,7 @@ export default function BasicDetails() {
                 setCompanyNews(companyNewsData)
                 setCompanyInsiderSentiment(companyInsiderSentimentData)
                 setRecommendationTrends(recommendationTrendsData)
+                setCompanyEarnings(companyEarningsData)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -135,7 +141,8 @@ export default function BasicDetails() {
 
             <div>
                 <WholeComponents ticker={ticker} latestPrice={latestPrice} detail={detail} companyPeers={companyPeers}
-                                 companyNews={companyNews} companyInsiderSentiment={companyInsiderSentiment} recommendationTrends={recommendationTrends}/>
+                                 companyNews={companyNews} companyInsiderSentiment={companyInsiderSentiment} 
+                                 recommendationTrends={recommendationTrends}  companyEarnings={companyEarnings} />
             </div>
         </>
         )}

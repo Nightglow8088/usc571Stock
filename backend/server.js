@@ -146,6 +146,25 @@ app.get('/companyPeers', async(req, res) => {
 });
 
 
+app.get('/companyEarnings', async(req, res) => {
+  const { symbol } = req.query; 
+  try {
+      const response = await axios.get(`https://finnhub.io/api/v1/stock/earnings?symbol=${symbol}&token=${APIKey}`);
+      const sanitizedData = response.data.map(item => {
+        Object.keys(item).forEach(key => {
+          if (item[key] === null) {
+            item[key] = 0; // Replace null with 0
+          }
+        });
+        return item;
+      });
+      res.status(200).json(sanitizedData);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 
 const port = process.env.PORT || 3000;
  

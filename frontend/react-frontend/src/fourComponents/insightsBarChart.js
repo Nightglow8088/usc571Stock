@@ -18,10 +18,10 @@ const processDataForChart = (data) => {
   return {
     categories,
     series: [
+      { name: 'Strong Buy', data: strongBuy },
       { name: 'Buy', data: buy },
       { name: 'Hold', data: hold },
       { name: 'Sell', data: sell },
-      { name: 'Strong Buy', data: strongBuy },
       { name: 'Strong Sell', data: strongSell },
     ]
   };
@@ -45,17 +45,13 @@ export default function InsightsBarChart({recommendationTrends}) {
         text: 'Recommendation Trends',
         align: 'center'
     },
-    // subtitle: {
-    //     text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/landtransport/statistikk/innenlandsk-transport">SSB</a>',
-    //     align: 'left'
-    // },
     xAxis: {
-        categories: ['2019', '2020', '2021']
+      categories: categories
     },
     yAxis: {
         min: 0,
         title: {
-            text: 'Percent'
+            text: '#analysis'
         }
     },
     tooltip: {
@@ -64,28 +60,16 @@ export default function InsightsBarChart({recommendationTrends}) {
     },
     plotOptions: {
         column: {
-            stacking: 'percent',
+            stacking: 'normal',
             dataLabels: {
                 enabled: true,
-                format: '{point.percentage:.0f}%'
+                // format: '{point.percentage:.0f}%'
             }
         }
     },
-    series: [{
-        name: 'Strong Buy',
-        data: [434, 290, 307]
-    }, {
-        name: 'Buy',
-        data: [272, 153, 156]
-    }, {
-        name: 'Hold',
-        data: [13, 7, 8]
-    }, {
-        name: 'Sell',
-        data: [55, 35, 41]
-    }]
-    
+    series
 
+    
   };
 
 
