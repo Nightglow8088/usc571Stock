@@ -115,3 +115,10 @@
   
   /* Add further styling for social icons and any additional content */
   
+
+  .modal-share svg {
+    fill: currentColor; /* This will make the SVG use the color of the parent element */
+    width: 20px; /* Set the width to your preference */
+    height: 20px; /* Set the height to match the width for a square aspect ratio */
+
+  }

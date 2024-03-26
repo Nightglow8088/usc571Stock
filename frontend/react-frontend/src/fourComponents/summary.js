@@ -23,8 +23,8 @@ function Summary({latestPrice,detail,companyPeers}) {
             <div><span className="summary-titles">Webpage: </span><a href={detail?.weburl || null}>{detail?.weburl || null}</a></div>
             <div><span className="summary-titles">Company peers: </span></div>
             <div>
-            {companyPeers? (companyPeers.map((ticker) => (
-                <a href={`/search/${ticker}`} rel="noopener noreferrer"> {ticker+" "} </a>
+            {companyPeers? (companyPeers.map((ticker,index) => (
+                <a key={index} href={`/search/${ticker}`} > {ticker+", "} </a>
                 ))) 
             : null}
             </div>

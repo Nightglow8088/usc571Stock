@@ -1,32 +1,53 @@
 import React from 'react'
+import InsightsBarChart from './insightsBarChart';
+import InsightsInvertedLineChart from './insightsInvertedLineChart';
 import './insights.css'
 
 export default function Insights({companyInsiderSentiment}) {
     const [aggregated, setAggregated] = React.useState({
       totalMspr: 0,
-      totalPositiveMspr: 0,
-      totalNegativeMspr: 0
+      positiveMspr: 0,
+      negativeMspr: 0,
+      totalChange: 0,
+      positiveChange: 0,
+      negativeChange: 0
     });
 
     const aggregateMsprValues = (companyInsiderSentiment) => {
       let totalMspr = 0;
-      let totalPositiveMspr = 0;
-      let totalNegativeMspr = 0;
+      let positiveMspr = 0;
+      let negativeMspr = 0;
+      let totalChange = 0;
+      let positiveChange = 0;
+      let negativeChange = 0;
   
 
         for (const entry of companyInsiderSentiment) {
-          totalMspr += entry.mspr;
+          totalMspr+= entry.mspr;
+          totalChange+=entry.change;
           if (entry.mspr > 0) {
-            totalPositiveMspr += entry.mspr;
-          } else if (entry.mspr < 0) {
-            totalNegativeMspr += entry.mspr;
+            positiveMspr += entry.mspr;
+          } 
+          else if (entry.mspr < 0) {
+            negativeMspr += entry.mspr;
           }
+
+          if (entry.change > 0) {
+            positiveChange += entry.change;
+          } 
+          else if (entry.change < 0) {
+            negativeChange += entry.change;
+          }
+
         }
       
         return {
           totalMspr,
-          totalPositiveMspr,
-          totalNegativeMspr
+          positiveMspr,
+          negativeMspr,
+          totalChange,
+          positiveChange,
+          negativeChange
         };
     };
 
@@ -40,39 +61,53 @@ export default function Insights({companyInsiderSentiment}) {
   return (
     <>
     {companyInsiderSentiment? (
-        // handleAggregate(sentimencompanyInsiderSentimenttData)
 
-            <div className="insider-sentiments-container">
-                <div className="insider-sentiments-table">
-                    <h2>Insider Sentiments</h2>
-                    <table>
-                    <tbody>
-                        <tr>
-                        <td>Apple Inc</td>
-                        <td>{aggregated.totalMspr}</td>
-                        <td>{aggregated.totalPositiveMspr}</td>
-                        </tr>
-                        <tr>
-                        <td>Total</td>
-                        <td>{aggregated.totalMspr}</td>
-                        <td>{aggregated.totalPositiveMspr}</td>
-                        </tr>
-                    </tbody>
-                    </table>
-                </div>
-                <div className='charts'>
+      <div className="insider-sentiments-container">
+        <div className="insider-sentiments">
+          <h2>Insider Sentiments</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Apple Inc</th>
+                <th>MSFR</th>
+                <th>Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Total</td>
+                <td>{aggregated.totalMspr.toFixed(2)}</td>
+                <td>{aggregated.totalChange}</td>
+              </tr>
+              <tr>
+                <td>Positive</td>
+                <td>{aggregated.positiveMspr.toFixed(2)}</td>
+                <td>{aggregated.positiveChange}</td>
+              </tr>
+              <tr>
+                <td>Negative</td>
+                <td>{aggregated.negativeMspr.toFixed(2)}</td>
+                <td>{aggregated.negativeChange}</td>
+              </tr>
+            </tbody>
+          </table>
 
-                  <div className="recommendation-trends-chart">
-                      <h2>Recommendation Trends</h2>
-                      {/* <HighchartsReact highcharts={Highcharts} options={recommendationTrendsOptions} /> */}
-                  </div>
-
-                  <div className="eps-surprises-chart">
-                      <h2>Historical EPS Surprises</h2>
-                      {/* <HighchartsReact highcharts={Highcharts} options={epsSurprisesOptions} /> */}
-                  </div>
-                </div>
+          <div className='charts'>
+            <div className="recommendation-trends-chart">
+                <InsightsBarChart />
+                {/* <h2>Recommendation Trends</h2> */}
+                {/* <HighchartsReact highcharts={Highcharts} options={recommendationTrendsOptions} /> */}
             </div>
+
+            <div className="eps-surprises-chart">
+              <InsightsInvertedLineChart />
+                {/* <h2>Historical EPS Surprises</h2> */}
+                {/* <HighchartsReact highcharts={Highcharts} options={epsSurprisesOptions} /> */}
+            </div>
+        </div>
+      </div>
+          
+      </div>
 
     ) : null
     }
