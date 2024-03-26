@@ -14,9 +14,6 @@ export default function Buttons({ value,stockName,setStockName }) {
         setStockName(value)
         console.log("stockName  "+stockName); 
         navigate("/search/"+value);
-
-
-
     };
 
     

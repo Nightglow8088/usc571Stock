@@ -97,7 +97,15 @@ app.get('/companyNews', async(req, res) => {
     const { symbol, from, to } = req.query; 
     try {
         const response = await axios.get(`https://finnhub.io/api/v1/company-news?symbol=${symbol}&from=${from}&to=${to}&token=${APIKey}`);
-        res.status(200).json(response.data);
+        // res.status(200).json(response.data);
+        
+        //gpt发力了
+        const validArticles = response.data.filter(article => {
+          // Check if any of the article properties is null or empty string
+          return Object.values(article).every(value => value !== null && value !== '');
+        }).slice(0, 20); // Get only the first 20 items
+
+        res.status(200).json(validArticles);
       } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });

@@ -1,0 +1,117 @@
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly; /* Distributes space evenly */
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .news-article {
+    display: flex;
+    align-items: center; /* Align items to the top */
+    width: calc(50% - 40px); /* Subtract the total gap from 100% and divide by 2 */
+    margin-bottom: 20px; /* Space between rows */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adds some shadow for depth */
+    border-radius: 8px; /* Softens the corners */
+    padding: 20px; /* Padding inside the news article */
+  }
+  
+  .news-image {
+    width: 120px; /* Adjust the width as needed */
+    height: 80px; /* Adjust the height as needed */
+    object-fit: cover; /* Ensures the image covers the area */
+    margin-right: 20px; /* Space between image and text */
+    flex-shrink: 0; /* Prevent the image from shrinking */
+  }
+  
+  .news-text {
+    display: flex;
+    flex-direction: column; /* Stacks the title and description vertically */
+    justify-content: center; /* Centers the text vertically */
+  }
+  
+  .news-title {
+    margin: 0 0 10px 0; /* Space between title and description */
+    font-size: 1em; /* Adjust font-size as needed */
+    font-weight: bold; /* Makes the title bold */
+  }
+  
+  .news-description {
+    margin: 0;
+    font-size: 0.9em; /* Adjust font-size as needed */
+  }
+  
+  /* For smaller screens, make each article take full width */
+  @media (max-width: 600px) {
+    .news-article {
+      width: 100%; /* Each article takes full width */
+      padding: 10px; /* Adjust padding for smaller screens */
+    }
+  }
+
+  
+
+
+
+
+  /* modal */
+  .modal {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: center; /* Center items horizontally */
+    overflow: auto; /* Enables scrolling if the modal is too long for the viewport */
+    padding: 1rem;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    outline: none;
+    border-radius: 4px;
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+    width: auto; /* Adjust the width as needed, or use a max-width */
+    max-width: 500px; /* This will constrain the width on larger screens */
+    margin: auto; 
+  }
+  
+  .close-button {
+    color: blue;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 25px;
+    text-decoration: underline; /* This adds an underline */
+
+  }
+  
+  .modal-title {
+    margin: 0;
+    color: #333;
+  }
+  
+  .modal-date {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .modal-headline {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .modal-summary {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .social-share {
+    margin-top: 20px;
+  }
+  
+  /* Add further styling for social icons and any additional content */
+  

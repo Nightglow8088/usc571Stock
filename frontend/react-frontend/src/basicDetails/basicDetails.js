@@ -11,6 +11,10 @@ export default function BasicDetails() {
     const [detail, setDetail] = React.useState(null);
     const [latestPrice, setLatestPrice] = React.useState(null);
     const [companyPeers, setCompanyPeers] = React.useState(null);
+    const [companyNews, setCompanyNews] = React.useState(null);
+    const [companyInsiderSentiment, setCompanyInsiderSentiment] = React.useState(null);
+
+    
     const [marketOpen, setMarketOpen] = React.useState(false);
     const [positiveChange, setPositiveChange] = React.useState(false);
 
@@ -38,8 +42,6 @@ export default function BasicDetails() {
         else{
             setMarketOpen(false)
         }
-      
-        
     }
 
 
@@ -55,14 +57,25 @@ export default function BasicDetails() {
 
             const fetchCompanyPeers = fetch(`http://127.0.0.1:3000/companyPeers?symbol=${ticker}`)
                 .then(response => response.json());
+            console.log(`http://127.0.0.1:3000/companyNews?symbol=${ticker}&from=2023-01-15&to=${new Date().toISOString().split('T')[0]}`)
 
-            Promise.all([fetchDescription, fetchLatestPrice,fetchCompanyPeers])
-            .then(([descriptionData, latestPriceData,companyPeersData]) => {
+            const fetchCompanyNews = fetch(`http://127.0.0.1:3000/companyNews?symbol=${ticker}&from=2023-01-15&to=${new Date().toISOString().split('T')[0]}`)
+                .then(response=> response.json())
+
+            
+            const fetchCompanyInsiderSentiment = fetch(`http://127.0.0.1:3000/companyInsiderSentiment?symbol=${ticker}`)
+                .then(response=> response.json())
+
+            Promise.all([fetchDescription, fetchLatestPrice,fetchCompanyPeers,fetchCompanyNews,fetchCompanyInsiderSentiment])
+            .then(([descriptionData, latestPriceData,companyPeersData,companyNewsData,companyInsiderSentimentData]) => {
                 sameDateOrNot(latestPriceData.tradingDay)
                 setPositiveChange(latestPriceData.Change>=0)
+                
                 setCompanyPeers(companyPeersData)
                 setDetail(descriptionData);
                 setLatestPrice(latestPriceData);
+                setCompanyNews(companyNewsData)
+                setCompanyInsiderSentiment(companyInsiderSentimentData)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -116,7 +129,7 @@ export default function BasicDetails() {
             </div>
 
             <div>
-                <WholeComponents ticker={ticker} latestPrice={latestPrice} detail={detail} companyPeers={companyPeers}/>
+                <WholeComponents ticker={ticker} latestPrice={latestPrice} detail={detail} companyPeers={companyPeers} companyNews={companyNews} companyInsiderSentiment={companyInsiderSentiment}/>
             </div>
         </>
         )}
