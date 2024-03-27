@@ -11,7 +11,7 @@ import './wholeComponents.css'
 
 function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,companyInsiderSentiment,recommendationTrends,companyEarnings,companyHistoricalData}) {
     const [activeComponent, setActiveComponent] = React.useState('summary');
-    console.log(latestPrice)
+    // console.log(latestPrice)
     // 渲染对应的组件
     const renderComponent = () => {
       switch (activeComponent) {
@@ -22,7 +22,7 @@ function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,co
         case 'charts':
           return <Charts companyHistoricalData={companyHistoricalData} ticker={ticker}/>;
         case 'insights':
-          return <Insights companyInsiderSentiment={companyInsiderSentiment} recommendationTrends={recommendationTrends} companyEarnings={companyEarnings}/>;
+          return <Insights companyInsiderSentiment={companyInsiderSentiment} recommendationTrends={recommendationTrends} companyEarnings={companyEarnings} name={detail.name}/>;
         default:
         //   return <SummaryComponent />;
       }
@@ -31,8 +31,8 @@ function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,co
     return (
       <div className="dashboard">
         <div className="button-group">
-          <button onClick={() => setActiveComponent('summary')}>Summary</button>
-          <button onClick={() => setActiveComponent('topNews')}>Top News</button>
+          <button onClick={()=> setActiveComponent('summary')}>Summary</button>
+          <button onClick={() =>setActiveComponent('topNews')}>Top News</button>
           <button onClick={() => setActiveComponent('charts')}>Charts</button>
           <button onClick={() => setActiveComponent('insights')}>Insights</button>
         </div>

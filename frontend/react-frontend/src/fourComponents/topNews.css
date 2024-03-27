@@ -1,123 +1,146 @@
 .news-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly; /* Distributes space evenly */
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-  }
-  
-  .news-article {
-    display: flex;
-    align-items: center; /* Align items to the top */
-    width: calc(50% - 40px); /* Subtract the total gap from 100% and divide by 2 */
-    margin-bottom: 20px; /* Space between rows */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adds some shadow for depth */
-    border-radius: 8px; /* Softens the corners */
-    padding: 20px; /* Padding inside the news article */
-  }
-  
-  .news-image {
-    width: 120px; /* Adjust the width as needed */
-    height: 80px; /* Adjust the height as needed */
-    object-fit: cover; /* Ensures the image covers the area */
-    margin-right: 20px; /* Space between image and text */
-    flex-shrink: 0; /* Prevent the image from shrinking */
-  }
-  
-  .news-text {
-    display: flex;
-    flex-direction: column; /* Stacks the title and description vertically */
-    justify-content: center; /* Centers the text vertically */
-  }
-  
-  .news-title {
-    margin: 0 0 10px 0; /* Space between title and description */
-    font-size: 1em; /* Adjust font-size as needed */
-    font-weight: bold; /* Makes the title bold */
-  }
-  
-  .news-description {
-    margin: 0;
-    font-size: 0.9em; /* Adjust font-size as needed */
-  }
-  
-  /* For smaller screens, make each article take full width */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly; 
+
+  margin: auto;
+}
+
+.article {
+  display: flex;
+  align-items: center; 
+  width: 45%;
+
+  margin: 10px; 
+  border: 1px solid #cac7c7; 
+  background-color: #fbfbfb;
+
+  border-radius: 10px; 
+  padding: 20px;
+}
+
+.image {
+  height: 80px; 
+  width: 120px; 
+  margin-right: 20px;
+  object-fit: cover; 
+
+}
+
+.title {
+  color: #666;
+
+  font-size: 1em; 
+
+}
+
+
+
+/* 
   @media (max-width: 600px) {
     .news-article {
-      width: 100%; /* Each article takes full width */
-      padding: 10px; /* Adjust padding for smaller screens */
+      width: 100%; 
+      padding: 10px;
     }
   }
 
-  
+   */
 
 
 
 
   /* modal */
-  .modal {
-    display: flex;
-    align-items: center; /* Align items vertically */
-    justify-content: center; /* Center items horizontally */
-    overflow: auto; /* Enables scrolling if the modal is too long for the viewport */
-    padding: 1rem;
+  .container{
+    /* margin-top: 20px; */
   }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    outline: none;
-    border-radius: 4px;
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-    width: auto; /* Adjust the width as needed, or use a max-width */
-    max-width: 500px; /* This will constrain the width on larger screens */
-    margin: auto; 
-  }
-  
-  .close-button {
-    color: blue;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 25px;
-    text-decoration: underline; /* This adds an underline */
 
-  }
-  
-  .modal-title {
-    margin: 0;
-    color: #333;
-  }
-  
-  .modal-date {
-    color: #666;
-    font-size: 14px;
-  }
-  
-  .modal-headline {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-  }
-  
-  .modal-summary {
-    font-size: 14px;
-    color: #666;
-  }
-  
-  .social-share {
-    margin-top: 20px;
-  }
-  
-  /* Add further styling for social icons and any additional content */
-  
+.modal {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  overflow: auto; 
 
-  .modal-share svg {
-    fill: currentColor; 
-    width: 20px; 
-    height: 20px; 
-  }
+}
+
+.closeButton {
+  color: blue;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+
+}
+
+.modal-content {
+  background-color: white;
+  outline: none;
+  border-radius: 4px;
+  /* box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2); */
+  width: auto; 
+  max-width: 500px; 
+  height: auto;
+
+
+  margin: auto; 
+}
+
+
+
+.modal-title {
+  padding-top: 10px;
+  padding-left: 10px;
+
+}
+
+.modal-date {
+  padding-left: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #666; 
+  color: #666;
+  font-size: 14px;
+
+
+}
+
+.modal-headline {
+  padding-top: 10px;
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 0px;
+
+
+}
+
+.modal-summary {
+  padding-left: 10px;
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+
+.modal-url {
+  padding-left: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+
+.social-share {
+  padding-left: 10px;
+  border: 1px solid #cac7c7; 
+  border-radius: 10px; 
+
+  margin: 10px;
+  padding-bottom: 5px;
+}
+
+
+
+
+.modal-share svg {
+  margin:10px;
+  fill: currentColor; 
+  width: 30px; 
+  height: 30px; 
+}

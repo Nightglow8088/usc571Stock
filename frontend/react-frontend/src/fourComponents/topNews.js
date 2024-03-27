@@ -1,9 +1,6 @@
 import React from 'react'
 import './topNews.css'
 import {Modal} from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-
 
 
 export default function TopNews({companyNews}) {
@@ -18,6 +15,8 @@ export default function TopNews({companyNews}) {
         setNewsValue(article)
     };
 
+
+//copyed from higher layer
     function unixToDate (unixTimestamp){
         const date = new Date(unixTimestamp * 1000);
         const year = date.getFullYear();
@@ -36,21 +35,22 @@ export default function TopNews({companyNews}) {
     <div className="news-container">
         {companyNews ? (
         companyNews.map((article, index) => (
-            <div key={index} className="news-article" onClick={() => handleOpen(article)}>
+            <div key={index} className="article" onClick={() => handleOpen(article)}>
                 
-                <img src={article.image} alt={article.related} className="news-image" />
-                <h3 className="news-title">{article.headline}</h3>
-            {/* <p className="news-description">{article.description}</p> */}
+                <img src={article.image} alt={article.related} className="image" />
+                <h3 className="title">{article.headline}</h3>
+
             </div>
         ))
         ) : null
         }
 
         {newsValue? (
+            <div className='container'> 
             <Modal open={isModalOpen}>
 
                 <div className="modal-content">
-                    <button className="close-button" onClick={handleClose}>
+                    <button className="closeButton" onClick={handleClose}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
                         </svg>
@@ -59,7 +59,7 @@ export default function TopNews({companyNews}) {
                     <p className="modal-date">{unixToDate(newsValue.datetime)}</p>
                     <h2 className="modal-headline">{newsValue.headline}</h2>
                     <p className="modal-summary">{newsValue.summary}</p>
-                    <p className="modal-summary"> For more details click <a href={newsValue.url} target="_blank">here</a></p>
+                    <p className="modal-url"> For more details click <a href={newsValue.url} target="_blank">here</a></p>
                     {/* Social share icons */}
                     <div className="social-share">
                         <span>Share</span>
@@ -81,11 +81,12 @@ export default function TopNews({companyNews}) {
 
                         </div>
 
-                    {/* Icons would go here */}
+
                     </div>
                 </div>
 
             </Modal>
+            </div>
         ) : null
 
         }

@@ -1,94 +1,44 @@
-/* .insider-sentiments-container {
+.container{
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
-  max-width: 1200px; 
-  margin: auto;
-  padding: 20px;
-  background-color: #fff; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.insider-sentiments-table {
-  margin-bottom: 20px;
+ .insiderSentiments {
+  width: 50%;
 }
 
 
-h2 {
-  color: #333; 
-  margin-bottom: 10px;
-}
-
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-
-p {
-  color: #333;
-  font-size: 1em;
-}
- */
-
- .insider-sentiments {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-}
-
-.insider-sentiments h2 {
+.insiderSentiments h2 {
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
+  margin-bottom: 15px;
+
 }
 
-.insider-sentiments table {
+.insiderSentiments table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   table-layout: fixed;
 }
 
-.insider-sentiments th,
-.insider-sentiments td {
+
+.insiderSentiments th { 
+
+  font-weight: bold;
+} 
+
+.insiderSentiments th, .insiderSentiments td {
   text-align: center;
   padding: 8px 16px;
-  border-bottom: 1px solid #eaeaea;
-}
-
-.insider-sentiments th {
-  background-color: #f5f5f5;
-  font-weight: bold;
-}
-
-/* If you need to style the specific columns */
-.insider-sentiments td:nth-child(1) { /* First column */
-  width: 33%;
-}
-
-.insider-sentiments td:nth-child(2) { /* Second column */
-  width: 33%;
-}
-
-.insider-sentiments td:nth-child(3) { /* Third column */
-  width: 33%;
+  border-bottom: 1px solid #e8e0e0;
 }
 
 
 
 
-.charts{
+
+.recommendationCharts{
   display: flex;
 }

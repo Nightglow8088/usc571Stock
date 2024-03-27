@@ -17,6 +17,8 @@ export default function Charts({companyHistoricalData,ticker }) {
     if(!companyHistoricalData || !ticker || ticker=="home"|| typeof ticker==="undefined"){
         return null;
     }
+    const tickerUpperCase = ticker.toUpperCase();
+
 
 
     // console.log(companyHistoricalData)
@@ -34,11 +36,16 @@ export default function Charts({companyHistoricalData,ticker }) {
 
 
     const options = {
+        chart: {
+
+            height:600,
+            width: 900, 
+        },
         rangeSelector: {
             selected: 2,
         },
         title: {
-            text: ticker+' Historical',
+            text: tickerUpperCase+' Historical',
         },
         subtitle: {
             text: 'with sma and volume by price technical indicators',
@@ -76,7 +83,7 @@ export default function Charts({companyHistoricalData,ticker }) {
             {
                 id: 'stock', 
                 type: 'candlestick',
-                name: ticker+' Stock Price',
+                name: tickerUpperCase+' Stock Price',
                 data: candlestickData,
             },
             {

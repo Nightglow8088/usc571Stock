@@ -1,4 +1,4 @@
-* wholeComponents.css */
+
 .dashboard {
   font-family: 'Arial', sans-serif;
   max-width: 1200px;
@@ -36,5 +36,5 @@
 .button-group button.active {
   background-color: #007bff; /* Use a blue background for the active button */
   color: white; /* White text for the active button */
-  border-color: #007bff; /* Border color for active button */
+  border-color: #0378f5; /* Border color for active button */
 }

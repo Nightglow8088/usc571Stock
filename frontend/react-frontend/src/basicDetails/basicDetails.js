@@ -88,7 +88,7 @@ export default function BasicDetails() {
                 .then(response=> response.json())
 
             const fetchCompanyHistoricalData = fetch(`${process.env.REACT_APP_API_URL}/companyHistoricalData?stockTicker=${ticker}&multiplier=1&timespan=day&from=${getTwoYearsAgoDate()}&to=${new Date().toISOString().split('T')[0]}`)
-                .then(response=> response.json())
+                .then(response=> response.json()) 
 
             Promise.all([fetchDescription, fetchLatestPrice,fetchCompanyPeers,fetchCompanyNews,fetchCompanyInsiderSentiment,fetchRecommendationTrends,fetchCompanyEarnings,fetchCompanyHistoricalData])
             .then(([descriptionData, latestPriceData,companyPeersData,companyNewsData,companyInsiderSentimentData,recommendationTrendsData,companyEarningsData,companyHistoricalDataData]) => {
@@ -146,7 +146,7 @@ export default function BasicDetails() {
                 </div>
 
                 <div className="stock-price">
-                    <span className={`current-price ${positiveChange ? 'greenWords' : 'redWords'}`}>{latestPrice?.previousClosingPrice || null}</span>
+                    <span className={`current-price ${positiveChange ? 'greenWords' : 'redWords'}`}>{latestPrice?.currentPrice || null}</span>
                     <span className={`price-change ${positiveChange ? 'greenWords' : 'redWords'}`}> {latestPrice?( positiveChange? "▲" + latestPrice.Change  : "▼" + latestPrice.Change ) : null} ({latestPrice?.percentageChange || null}%)</span>
                     <div className="time-status">
                     <   span className="timestamp">{latestPrice?unixToDate(Math.round(new Date().getTime()/1000)) : null}</span>

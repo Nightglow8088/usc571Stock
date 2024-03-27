@@ -3,7 +3,8 @@ import InsightsBarChart from './insightsBarChart';
 import InsightsInvertedLineChart from './insightsInvertedLineChart';
 import './insights.css'
 
-export default function Insights({companyInsiderSentiment, recommendationTrends,companyEarnings}) {
+export default function Insights({companyInsiderSentiment, recommendationTrends,companyEarnings, name}) {
+
     const [aggregated, setAggregated] = React.useState({
       totalMspr: 0,
       positiveMspr: 0,
@@ -60,54 +61,52 @@ export default function Insights({companyInsiderSentiment, recommendationTrends,
 
   return (
     <>
-    {companyInsiderSentiment? (
+    {(companyInsiderSentiment && name)? (
 
-      <div className="insider-sentiments-container">
-        <div className="insider-sentiments">
+      <div className="container">
+        <div className="insiderSentiments">
           <h2>Insider Sentiments</h2>
+
           <table>
             <thead>
               <tr>
-                <th>Apple Inc</th>
-                <th>MSFR</th>
-                <th>Change</th>
+                <th> {name}</th>
+                <th> MSFR </th>
+                <th> Change </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Total</td>
+                <td><b>Total</b></td>
                 <td>{aggregated.totalMspr.toFixed(2)}</td>
                 <td>{aggregated.totalChange}</td>
               </tr>
               <tr>
-                <td>Positive</td>
+                <td><b>Positive</b></td>
                 <td>{aggregated.positiveMspr.toFixed(2)}</td>
                 <td>{aggregated.positiveChange}</td>
               </tr>
               <tr>
-                <td>Negative</td>
+                <td><b>Negative</b></td>
                 <td>{aggregated.negativeMspr.toFixed(2)}</td>
                 <td>{aggregated.negativeChange}</td>
               </tr>
             </tbody>
           </table>
-
-          <div className='charts'>
-            <div className="recommendation-trends-chart">
-                <InsightsBarChart recommendationTrends={recommendationTrends}/>
-                {/* <h2>Recommendation Trends</h2> */}
-                {/* <HighchartsReact highcharts={Highcharts} options={recommendationTrendsOptions} /> */}
-            </div>
-
-            <div className="eps-surprises-chart">
-              <InsightsInvertedLineChart companyEarnings={companyEarnings}/>
-                {/* <h2>Historical EPS Surprises</h2> */}
-                {/* <HighchartsReact highcharts={Highcharts} options={epsSurprisesOptions} /> */}
-            </div>
         </div>
+
+        <div className='recommendationCharts'>
+          <div className="recommendation-trends-chart">
+              <InsightsBarChart recommendationTrends={recommendationTrends}/>
+          </div>
+
+          <div className="eps-surprises-chart">
+            <InsightsInvertedLineChart companyEarnings={companyEarnings}/>
+
+          </div>
+      </div>
       </div>
           
-      </div>
 
     ) : null
     }

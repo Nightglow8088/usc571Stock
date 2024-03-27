@@ -3,11 +3,10 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
 
-const processDataForChart = (data) => {
-  // Sort data by period
+const generateData = (data) => {
+
   const sortedData = data.sort((a, b) => new Date(a.period) - new Date(b.period));
   
-  // Map through the data to create the series
   const categories = sortedData.map(item => item.period);
   const buy = sortedData.map(item => item.buy);
   const hold = sortedData.map(item => item.hold);
@@ -31,9 +30,9 @@ export default function InsightsBarChart({recommendationTrends}) {
   if (!recommendationTrends ) {
     return ;
   }
-  const { categories, series } = processDataForChart(recommendationTrends);
-  console.log(categories)
-  console.log(series)
+  const { categories, series } = generateData(recommendationTrends);
+  // console.log(categories)
+  // console.log(series)
 
 
 
@@ -63,7 +62,6 @@ export default function InsightsBarChart({recommendationTrends}) {
             stacking: 'normal',
             dataLabels: {
                 enabled: true,
-                // format: '{point.percentage:.0f}%'
             }
         }
     },

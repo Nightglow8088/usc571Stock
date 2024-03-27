@@ -1,0 +1,30 @@
+# runtime: nodejs18
+# service: default  # 显式声明这是default服务
+
+
+# handlers:
+# - url: /
+#   static_files: build/index.html
+#   upload: build/index.html
+
+# - url: /(.*)
+#   static_files: build/\1
+#   upload: build/(.*)
+
+
+
+runtime: nodejs18
+service: default  
+
+
+handlers:
+- url: /static
+  static_dir: build/static
+
+- url: /(.*\.(json|js|ico|png|svg|jpg|jpeg|gif|woff|woff2|ttf|eot|css|map))$
+  static_files: build/\1
+  upload: build/.*\.(json|js|ico|png|svg|jpg|jpeg|gif|woff|woff2|ttf|eot|css|map)$
+
+- url: /.*
+  static_files: build/index.html
+  upload: build/index.html

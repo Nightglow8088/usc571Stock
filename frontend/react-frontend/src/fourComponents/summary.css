@@ -7,11 +7,10 @@
   
   .summary-section {
     width: 40%; 
-    /* Adjust width as needed */
   }
   
   .price-info {
-    /* background: #f8f8f8; */
+
     padding: 20px;
     margin-bottom: 20px;
   }
@@ -19,10 +18,9 @@
   .company-info {
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+
     align-items: center;
-    /* padding: 20px; */
-    /* background: #f8f8f8; */
+
   }
   
   .company-info h2 {
@@ -31,13 +29,12 @@
   
   .chart-section {
     width: 40%;
-     /* Adjust width as needed */
-    /* Add styles for your chart container */
+
   }
   
   /* Add any additional styling as needed */
 
-/* 这些事我写的 */
+
   .summary-titles{
     font-weight: bold;
   }
