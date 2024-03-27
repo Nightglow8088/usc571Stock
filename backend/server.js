@@ -41,12 +41,17 @@ app.get('/companyHistoricalData', async(req, res) => {
     const { stockTicker, multiplier,timespan, from, to} = req.query; 
     try {
         const response = await axios.get(`https://api.polygon.io/v2/aggs/ticker/${stockTicker}/range/${multiplier}/${timespan}/${from}/${to}?adjusted=true&sort=asc&apiKey=${APIKey2}`);
-        console.log(response.data)
+        // console.log(response.data)
 
         const modifiedStocks = response.data.results.map(stock => ({
             date: stock.t,
-            stockPrice: stock.c,
-            volume: stock.v
+            closePrice: stock.c,
+            volume: stock.v,
+            highPrice: stock.h,
+            lowPrice: stock.l,
+            openPrice: stock.o,
+            transactions: stock.n,
+            weighted: stock.vw
         }));
 
         res.status(200).json(modifiedStocks);

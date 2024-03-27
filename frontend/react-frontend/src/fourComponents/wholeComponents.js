@@ -2,12 +2,14 @@ import React from 'react'
 import Summary from './summary';
 import TopNews from './topNews';
 import Insights from './insights';
+import Charts from './charts';
+
 import './wholeComponents.css'
 
 
 
 
-function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,companyInsiderSentiment,recommendationTrends,companyEarnings}) {
+function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,companyInsiderSentiment,recommendationTrends,companyEarnings,companyHistoricalData}) {
     const [activeComponent, setActiveComponent] = React.useState('summary');
     console.log(latestPrice)
     // 渲染对应的组件
@@ -17,8 +19,8 @@ function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,co
           return <Summary latestPrice={latestPrice} detail={detail} companyPeers={companyPeers}/>;
         case 'topNews':
               return <TopNews companyNews={companyNews}/>;
-        // case 'charts':
-        //   return <ChartsComponent />;
+        case 'charts':
+          return <Charts companyHistoricalData={companyHistoricalData} ticker={ticker}/>;
         case 'insights':
           return <Insights companyInsiderSentiment={companyInsiderSentiment} recommendationTrends={recommendationTrends} companyEarnings={companyEarnings}/>;
         default:
