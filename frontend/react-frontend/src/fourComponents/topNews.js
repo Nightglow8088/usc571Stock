@@ -34,15 +34,15 @@ export default function TopNews({companyNews}) {
   return (
     <div className="news-container">
         {companyNews ? (
-        companyNews.map((article, index) => (
-            <div key={index} className="article" onClick={() => handleOpen(article)}>
-                
-                <img src={article.image} alt={article.related} className="image" />
-                <h3 className="title">{article.headline}</h3>
+            companyNews.map((article, index) => (
+                <div key={index} className="article" onClick={() => handleOpen(article)}>
+                    
+                    <img src={article.image} alt={article.related} className="image" />
+                    <h3 className="title">{article.headline}</h3>
 
-            </div>
-        ))
-        ) : null
+                </div>
+            ))
+            ) : null
         }
 
         {newsValue? (

@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const axios = require('axios');
 const app = express();
 
-const { main ,findCurrentMoney ,addStock,tickerExist} = require('./mongodb'); // 确保路径正确
+const { main ,findCurrentMoney ,updateStockMoney,updateStockMoneySell,tickerExist} = require('./mongodb'); // 确保路径正确
 
 
 const APIKey = "cn3i9ghr01qvutcdcu9gcn3i9ghr01qvutcdcua0"
@@ -197,12 +197,26 @@ app.get('/dbFindMoney', async (req, res) => {
   }
 });
 
-app.get('/dbAddStock', async (req, res) => {
+app.get('/dbUpdateStockMoney', async (req, res) => {
   const { ticker,newQuantity,newPrice ,companyName} = req.query; 
   const newQuantityInt = parseInt(newQuantity, 10);
   const newPriceInt = parseFloat(newPrice);
   try {
-    const newData = await addStock(ticker.toUpperCase(),newQuantityInt,newPriceInt, companyName);
+    const newData = await updateStockMoney(ticker.toUpperCase(),newQuantityInt,newPriceInt, companyName);
+    res.send(newData);
+  } catch (error) {
+    console.error('dbAddStock failed', error);
+    res.status(500).send('dbAddStock failed');
+  }
+});
+
+
+app.get('/dbSellStockMoney', async (req, res) => {
+  const { ticker,newQuantity, newPrice} = req.query; 
+  const newQuantityInt = parseInt(newQuantity, 10);
+  const newPriceInt = parseFloat(newPrice);
+  try {
+    const newData = await updateStockMoneySell(ticker.toUpperCase(),newQuantityInt,newPriceInt);
     res.send(newData);
   } catch (error) {
     console.error('dbAddStock failed', error);

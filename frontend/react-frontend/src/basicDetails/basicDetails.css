@@ -93,6 +93,19 @@
   border-radius: 5px;
 }
 
+.sell-button {
+  background-color: red; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
 
 
 .market-status{

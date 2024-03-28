@@ -1,0 +1,105 @@
+
+.modal {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    overflow: auto; 
+  
+  }
+  
+  .closeButton {
+    color: blue;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+  
+  }
+  
+  .modal-content {
+    background-color: white;
+    outline: none;
+    border-radius: 4px;
+    /* box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2); */
+    width: auto; 
+    max-width: 500px; 
+    height: auto;
+  
+  
+    margin: auto; 
+  }
+  
+  
+  
+  .modal-title {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #b8b8b8; 
+  
+  }
+  
+  /* .modal-date {
+    padding-left: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #666; 
+    color: #666;
+    font-size: 14px;
+  
+  
+  } */
+  
+  /* .modal-headline {
+    padding-top: 10px;
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 0px;
+  
+  
+  } */
+  
+  .modal-stockInfo {
+    margin-top: 10px;
+    padding-left: 10px;
+    font-size: 14px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #b8b8b8; 
+  }
+
+  .modal-stockInfo p{
+    color: #666;
+    margin: 0px;
+  }
+
+  .modal-stockInfo label{
+    color: #666;
+    margin: 0px;
+  }
+
+  .modal-input{
+    /* color: #666; */
+    margin-left: 5px;
+    width: 50%;
+  }
+  /* .modal-url {
+    padding-left: 10px;
+    font-size: 14px;
+    color: #666;
+  }
+   */
+  
+  .social-totalValue {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+  
+    margin: 10px;
+    padding-bottom: 5px;
+  }
+
+  #modal-overBudgetWarning{
+    color: red;
+  }
