@@ -1,19 +1,45 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import './navBar.css'
 
 export default function NavBar() {
+
     return (
         <div className="navBar">
             <ul className="nav nav-pills">
-            <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="#">Search</a>
+            <li id="search" className="nav-item">
+
+                {/* 这里的to要更改 */}
+                <NavLink className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"} 
+                    to="/search/home"
+                >
+                    Search
+                </NavLink>
             </li>
-            <li className="nav-item">
-                <a className="nav-link" href="#">WatchList</a>
+
+
+            <li id="watchList" className="nav-item">
+                <NavLink
+                    className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"}
+                    to="/watchList"
+                >
+                    WatchList
+                </NavLink>
             </li>
-            <li className="nav-item">
-                <a className="nav-link" href="#">Portfolio</a>
+
+
+            <li id ="portfolio" className="nav-item">
+                <NavLink
+                    className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"}
+                    to="/portfolio"
+                >
+                    Portfolio
+                </NavLink>
             </li>
 
             </ul>

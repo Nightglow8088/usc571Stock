@@ -8,3 +8,20 @@
 .nav-link{
     color: white;
 }
+
+
+#watchList .nav-link.active {
+    background-color: transparent;
+    border: 1px solid #fff; /* 添加底部边框 */
+  }
+
+  #search .nav-link.active {
+    background-color: transparent;
+    border: 1px solid #fff; /* 添加底部边框 */
+  }
+
+  #portfolio .nav-link.active {
+    background-color: transparent;
+    border: 1px solid #fff; /* 添加底部边框 */
+  }
+  
