@@ -97,6 +97,7 @@ export default function BasicDetails() {
 
     //这俩是buy和sell按钮控制器
     const handleOpen = () => {
+        console.log(modlaBuyOpen)
         setModlaBuyOpen(true);
     };
 
@@ -144,11 +145,15 @@ export default function BasicDetails() {
 
     // save to database
     const handleBuy =() =>{
-
-        setStockExisted(data => ({
-            ...data, // 复制原有状态中的所有字段
-            quantity: data.quantity +  parseFloat(inputQuantityNumber)
-        }));
+        if(stockExisted==false){
+            setStockExisted({quantity:  parseFloat(inputQuantityNumber)});
+        }
+        else{
+            setStockExisted(data => ({
+                ...data, // 复制原有状态中的所有字段
+                quantity: data.quantity +  parseFloat(inputQuantityNumber)
+            }));
+        }
         console.log(stockExisted)
 
         setModlaBuyOpen(false)
@@ -175,16 +180,28 @@ export default function BasicDetails() {
     }
 
     const handleSell=()=>{
-        setStockExisted(data => ({
-            ...data, // 复制原有状态中的所有字段
-            quantity: data.quantity - inputSellQuantityNumber// 更新quantity字段
-        }));
+        //当把所有股票都卖光了 关闭sell按钮 exist设置为false
+        const currentExistedQuantity =stockExisted.quantity - inputSellQuantityNumber
+        if(currentExistedQuantity==0){
+            setStockExisted(false)
+        }
+        else{
+            setStockExisted(data => ({
+                ...data, // 复制原有状态中的所有字段
+                quantity: currentExistedQuantity // 更新quantity字段
+            }));
+        }
         console.log(stockExisted)
         setModlaSellOpen(false)
         // console.log(apiUrl)
+
+
         const apiUrl = `${process.env.REACT_APP_API_URL}/dbSellStockMoney?ticker=${ticker.toUpperCase()}&newQuantity=${inputSellQuantityNumber}&newPrice=${totalSelledStockGet.toFixed(2)}`;
         // const urlWithParams = apiUrl + queryParams;
         console.log(apiUrl)
+
+
+
       
         // Make the API call
         fetch(apiUrl)
@@ -328,7 +345,7 @@ export default function BasicDetails() {
 
 
     {/* buy的modal界面 */}
-    {(latestPrice && stockExisted)? (
+    {(latestPrice && stockExisted!== null)? (
         <Modal open={modlaBuyOpen}>
             <div className="modal-content">
                 <button className="closeButton" onClick={() => setModlaBuyOpen(false)}>

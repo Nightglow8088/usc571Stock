@@ -38,6 +38,7 @@ async function findCurrentMoney() {
 
 }
 
+//购买
 async function updateStockMoney(ticker,newQuantityInt,newPriceInt, companyName) {
 
     try {
@@ -49,10 +50,14 @@ async function updateStockMoney(ticker,newQuantityInt,newPriceInt, companyName) 
 
     //   const money = await collection.findOne({ name: 'money' });
       const result = await collection.findOneAndUpdate(
-        { ticker: newTicker }, // 查找条件
+        { ticker: newTicker, type: "buyed" }, // 查找条件
         {
           $inc: { quantity: newQuantityInt, totalPrice: newPriceInt }, // 递增操作
-          $setOnInsert: { companyName: companyName } // 仅在插入新文档时设置companyName
+          $setOnInsert: { 
+            companyName: companyName,
+            type: "buyed" 
+          } 
+          // 仅在插入新文档时设置companyName
         },
         {
           upsert: true, // 如果不存在则插入
@@ -101,13 +106,20 @@ async function updateStockMoneySell(ticker,newQuantity,newPriceInt) {
     updatedTotalPrice = Math.max(updatedTotalPrice, 0);
     console.log(updatedTotalPrice+" "+updatedQuantity)
 
+    //如果此时将买入的股票删干净了 清楚它在数据库的数据 
+    if (updatedQuantity <= 0) {
+      await collection.deleteOne({ ticker: newTicker, type: "buyed" });
+  
+    } 
     // 更新股票信息
-    await collection.updateOne(
-      { ticker: newTicker },
-      {
-        $set: { quantity: updatedQuantity, totalPrice: updatedTotalPrice }
-      }
-    );
+    else {
+      await collection.updateOne(
+        { ticker: newTicker , type: "buyed"},
+        {
+          $set: { quantity: updatedQuantity, totalPrice: updatedTotalPrice }
+        }
+      );
+    }
 
     // 根据"name"字段查找并更新钱包余额
     const moneyIncreaseResult = await collection.findOneAndUpdate(
@@ -137,12 +149,12 @@ async function tickerExist(ticker) {
       const database = client.db(dbName);
       const collection = database.collection(collectionName);
 
-      const result = await collection.findOne({ ticker: newTicker });
+      const result = await collection.findOne({ ticker: newTicker, type:"buyed" });
 
       if (result) {
         return result; // 找到文档，返回找到的
     } else {
-        return null; // 没有找到文档，返回null
+        return false; // 没有找到文档，返回null
     }
 
 
