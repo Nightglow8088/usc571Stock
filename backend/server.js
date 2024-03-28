@@ -4,6 +4,9 @@ const morgan = require('morgan');
 const axios = require('axios');
 const app = express();
 
+const { main ,findCurrentMoney ,addStock,tickerExist} = require('./mongodb'); // 确保路径正确
+
+
 const APIKey = "cn3i9ghr01qvutcdcu9gcn3i9ghr01qvutcdcua0"
 const APIKey2 = "4hhuVtDtRFgLTj_PeIvLMRxWqguSxiQi"
  
@@ -19,9 +22,7 @@ const corsOptions ={
 
 app.use(cors(corsOptions)) // Use this after the variable declaration
  
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// });
+
 
 app.get('/companyDescription', async(req, res) => {
     const { ticker } = req.query; 
@@ -173,6 +174,59 @@ app.get('/companyEarnings', async(req, res) => {
     }
 });
 
+
+//database mongodb:
+app.get('/dbtest', async (req, res) => {
+  try {
+    await main();
+    res.send('Database operation was successful');
+  } catch (error) {
+    console.error('Database operation failed', error);
+    res.status(500).send('Database operation failed');
+  }
+});
+
+
+app.get('/dbFindMoney', async (req, res) => {
+  try {
+    const money = await findCurrentMoney();
+    res.send(money);
+  } catch (error) {
+    console.error('dbFindMoney failed', error);
+    res.status(500).send('dbFindMoney failed');
+  }
+});
+
+app.get('/dbAddStock', async (req, res) => {
+  const { ticker,newQuantity,newPrice ,companyName} = req.query; 
+  const newQuantityInt = parseInt(newQuantity, 10);
+  const newPriceInt = parseFloat(newPrice);
+  try {
+    const newData = await addStock(ticker.toUpperCase(),newQuantityInt,newPriceInt, companyName);
+    res.send(newData);
+  } catch (error) {
+    console.error('dbAddStock failed', error);
+    res.status(500).send('dbAddStock failed');
+  }
+});
+
+app.get('/dbTickerExist', async (req, res) => {
+  const { ticker} = req.query; 
+
+  try {
+    const result = await tickerExist(ticker.toUpperCase());
+    res.send(result);
+  } catch (error) {
+    console.error('dbTickerExist failed', error);
+    res.status(500).send('dbTickerExist failed');
+  }
+});
+
+
+
+
+
+//end
 
 const port = process.env.PORT || 3001;
  
