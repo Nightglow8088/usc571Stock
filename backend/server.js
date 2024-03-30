@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const axios = require('axios');
 const app = express();
 
-const { main ,findCurrentMoney ,updateStockMoney,updateStockMoneySell,tickerExist} = require('./mongodb'); // 确保路径正确
+const { main ,findCurrentMoney ,updateStockMoney,updateStockMoneySell,tickerExist, findWatchList,insertWatchList,deleteWatchList,existWatchList} = require('./mongodb'); // 确保路径正确
 
 
 const APIKey = "cn3i9ghr01qvutcdcu9gcn3i9ghr01qvutcdcua0"
@@ -235,6 +235,61 @@ app.get('/dbTickerExist', async (req, res) => {
     res.status(500).send('dbTickerExist failed');
   }
 });
+
+//WATCHLIST
+app.get('/dbShowWatchList', async (req, res) => {
+
+  try {
+    // console.log("dbShowWatchList")
+    const result = await findWatchList();
+    res.send(result);
+  } catch (error) {
+    console.error('dbShowWatchList failed', error);
+    res.status(500).send('dbShowWatchList failed');
+  }
+});
+
+
+
+app.get('/dbInsertWatchList', async (req, res) => {
+  const { ticker, companyName} = req.query; 
+  try {
+
+    const result = await insertWatchList(ticker.toUpperCase(),companyName);
+    res.send(result);
+  } catch (error) {
+    console.error('dbInsertWatchList failed', error);
+    res.status(500).send('dbInsertWatchList failed');
+  }
+});
+
+
+app.get('/dbDeleteWatchList', async (req, res) => {
+  const { ticker} = req.query; 
+  try {
+
+    const result = await deleteWatchList(ticker.toUpperCase());
+    res.send(result);
+  } catch (error) {
+    console.error('dbDeleteWatchList failed', error);
+    res.status(500).send('dbDeleteWatchList failed');
+  }
+});
+
+
+app.get('/dbExistWatchList', async (req, res) => {
+  const { ticker} = req.query; 
+  try {
+
+    const result = await existWatchList(ticker.toUpperCase());
+    res.send(result);
+  } catch (error) {
+    console.error('dbExistWatchList failed', error);
+    res.status(500).send('dbExistWatchList failed');
+  }
+});
+
+
 
 
 

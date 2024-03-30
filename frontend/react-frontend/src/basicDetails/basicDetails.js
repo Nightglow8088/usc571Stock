@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, useParams } from 'react-router-dom';
 import {Modal} from '@mui/material';
 import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
-// import { styled } from '@mui/system';
 
 
 
@@ -10,6 +9,7 @@ import WholeComponents from '../fourComponents/wholeComponents';
 import WholePage from '../wholePages/wholePages';
 import './basicDetails.css'
 import './modalBuys.css'
+
 
 
 
@@ -50,9 +50,13 @@ export default function BasicDetails() {
 
 
 
-
-
     //value end
+
+    //watchList
+
+    const [existedInWatchList, setExistedInWatchList] = React.useState(false);
+
+    //watchList end 
 
     
     const [marketOpen, setMarketOpen] = React.useState(false);
@@ -179,6 +183,28 @@ export default function BasicDetails() {
           });
     }
 
+    const handleWatchList= async(ticker)=>{
+        //存在 删除
+        if(existedInWatchList){
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/dbDeleteWatchList?ticker=${ticker}`);
+            const deletedInfo = await response.json();
+            console.log(deletedInfo)
+            setExistedInWatchList(false)
+        }
+        //不存在 加进去
+        else{
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/dbInsertWatchList?ticker=${ticker}&companyName=${detail.name}`);
+            const deletedInfo = await response.json();
+            console.log(deletedInfo)
+
+            setExistedInWatchList(true)
+
+
+        }
+        
+        
+    }
+
     const handleSell=()=>{
         //当把所有股票都卖光了 关闭sell按钮 exist设置为false
         const currentExistedQuantity =stockExisted.quantity - inputSellQuantityNumber
@@ -258,13 +284,16 @@ export default function BasicDetails() {
             const fetchMoney = fetch(`${process.env.REACT_APP_API_URL}/dbFindMoney`)
                 .then(response=> response.json()) 
 
+            const fetchWatchListExisted = fetch(`${process.env.REACT_APP_API_URL}/dbExistWatchList?ticker=${ticker}`)
+                .then(response=> response.json()) 
+
             Promise.all([fetchDescription, fetchLatestPrice, fetchCompanyPeers, fetchCompanyNews,
                         fetchCompanyInsiderSentiment, fetchRecommendationTrends, fetchCompanyEarnings,
-                        fetchCompanyHistoricalData, fetchStockExisted, fetchMoney])
+                        fetchCompanyHistoricalData, fetchStockExisted, fetchMoney,fetchWatchListExisted])
             .then(([descriptionData, latestPriceData, companyPeersData, companyNewsData,
                     companyInsiderSentimentData, recommendationTrendsData,
                     companyEarningsData, companyHistoricalDataData, stockExistedData,
-                    moneyData]) => {
+                    moneyData,watchListExistedData]) => {
                 sameDateOrNot(latestPriceData.tradingDay)
                 setPositiveChange(latestPriceData.Change>=0)
                 
@@ -278,7 +307,8 @@ export default function BasicDetails() {
                 setCompanyHistoricalData(companyHistoricalDataData)
                 setStockExisted(stockExistedData)
                 setMoney(moneyData)
-                console.log("stockExistedData "+stockExistedData)
+                setExistedInWatchList(watchListExistedData)
+                // console.log("stockExistedData "+stockExistedData)
 
             })
             .catch(error => {
@@ -305,7 +335,17 @@ export default function BasicDetails() {
                 <div className="stock-header">
                     <div>
                         <span className="stock-symbol">{ticker.toUpperCase()}</span>
-                        <span className="stock-favorite">&#9733;</span>
+                        <span className="stock-favorite" onClick={()=> handleWatchList(ticker)}>
+                            {existedInWatchList?(
+                                <span className="stock-favorite">&#9733;</span>
+                                )
+                                :
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+                                </svg>
+                            }
+
+                            </span>
                     </div>
                     <span className="stock-name">{detail?.name || null}</span>
                     <div className="stock-exchange">{detail?.exchange || null}</div>

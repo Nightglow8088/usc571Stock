@@ -166,7 +166,96 @@ async function tickerExist(ticker) {
 }
 
 
+async function findWatchList() {
+
+  try {
+    await client.connect();
+    const database = client.db(dbName);
+    const collection = database.collection(collectionName);
+
+    const result = collection.find({ type:"watchList" });
+
+    const resultsArray = await result.toArray();
+
+    return resultsArray; // 找不到就返回空列表
+
+
+
+  } catch (e) {
+      console.error(e); // 如果有错误发生，会在这里打印错误信息
+  } 
+
+}
+
+async function insertWatchList(ticker, companyName) {
+
+  try {
+    await client.connect();
+    const database = client.db(dbName);
+    const collection = database.collection(collectionName);
+
+    const result = await collection.insertOne({
+      ticker: ticker,
+      companyName: companyName,
+      type: "watchList"
+    });
+
+
+    return result; // 找不到就返回空列表
+
+
+
+  } catch (e) {
+      console.error(e); // 如果有错误发生，会在这里打印错误信息
+  } 
+
+}
+
+async function deleteWatchList(ticker) {
+
+  try {
+    await client.connect();
+    const database = client.db(dbName);
+    const collection = database.collection(collectionName);
+
+    const result = await collection.deleteOne({ ticker: ticker, type: "watchList" });
+
+    return result; // 找不到就返回空列表
+
+
+
+  } catch (e) {
+      console.error(e); // 如果有错误发生，会在这里打印错误信息
+  } 
+
+}
+
+async function existWatchList(ticker) {
+
+  try {
+    const newTicker = ticker.replace(/\s+/g, '');
+    await client.connect();
+    const database = client.db(dbName);
+    const collection = database.collection(collectionName);
+
+    const result = await collection.findOne({ ticker: newTicker, type:"watchList" });
+
+    if (result) {
+      return true; // 找到文档，返回找到的
+  } else {
+      return false; // 没有找到文档，返回null
+  }
+
+
+
+  } catch (e) {
+      console.error(e); // 如果有错误发生，会在这里打印错误信息
+  } 
+
+}
+
+
 
 // main().catch(console.error);
 
-module.exports = { main, findCurrentMoney ,updateStockMoney, updateStockMoneySell,tickerExist};
+module.exports = { main, findCurrentMoney ,updateStockMoney, updateStockMoneySell,tickerExist, findWatchList, insertWatchList,deleteWatchList,existWatchList};

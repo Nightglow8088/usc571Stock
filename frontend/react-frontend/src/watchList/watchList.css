@@ -1,0 +1,71 @@
+.watchlist-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  }
+  
+  .watchlist {
+    /* background-color: #f7f7f7; */
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .stock-info{
+    border: 1px solid black;
+    border-radius: 8px;
+    margin: 20px;
+  }
+  
+  .watchlist-item {
+    display: flex;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+  }
+  
+  .ticker-section {
+    width: 50%;
+
+    /* display: flex;
+    align-items: center; */
+  }
+  
+  .remove-button {
+    border: none;
+    background-color: transparent;
+    color: blue;
+    /* color: #888; */
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .ticker {
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .company-name {
+    margin: 0;
+    color: #666;
+  }
+  
+  .price-section {
+    width: 50%;
+    /* text-align: right; */
+  }
+  
+  .current-price {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #333;
+  }
+  
+  .price-change {
+    color: #4CAF50; /* Update color based on positive or negative value */
+  }
+  
