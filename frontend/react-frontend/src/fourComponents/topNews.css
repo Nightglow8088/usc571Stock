@@ -1,3 +1,4 @@
+
 .news-container {
   display: flex;
   flex-wrap: wrap;
@@ -29,30 +30,10 @@
 
 .title {
   color: #666;
-
   font-size: 1em; 
-
 }
 
 
-
-/* 
-  @media (max-width: 600px) {
-    .news-article {
-      width: 100%; 
-      padding: 10px;
-    }
-  }
-
-   */
-
-
-
-
-  /* modal */
-  .container{
-    /* margin-top: 20px; */
-  }
 
 .modal {
   display: flex;
@@ -85,12 +66,10 @@
   margin: auto; 
 }
 
-
-
-.modal-title {
+.modal-title-news {
   padding-top: 10px;
   padding-left: 10px;
-
+  border: none;
 }
 
 .modal-date {

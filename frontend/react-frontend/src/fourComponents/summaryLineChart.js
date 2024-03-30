@@ -8,55 +8,59 @@ import { Routes, Route, useParams } from 'react-router-dom';
 
 
 
-function SummaryLineChart() {
+function SummaryLineChart({dateInsummaryChart}) {
     let { ticker } = useParams();
+    const [chartData, setChartData] = React.useState([]);
+
+
+    React.useEffect(() => {
+        console.log(dateInsummaryChart.unixEndDate)
+        const fetchData = async () => {
+            // if (dateInsummaryChart.unixEndDate != null && dateInsummaryChart.unixStartDate != null) {
+                // console.log("aaaaa")
+                try {
+                    const response = await fetch(`${process.env.REACT_APP_API_URL}/companyHistoricalData?stockTicker=${ticker}&multiplier=1&timespan=hour&from=${dateInsummaryChart.unixStartDate}000&to=${dateInsummaryChart.unixEndDate}000`);
+                    const data = await response.json();
+                    // console.log(response);
+                    console.log(data);
+                    setChartData(data.map(point => [point.date, point.closePrice]));
+
+                    // Proceed with your logic here
+                } catch (error) {
+                    console.error("dateInsummaryChart error:", error);
+                }
+            // }
+        };
+        if (dateInsummaryChart.unixEndDate != null && dateInsummaryChart.unixStartDate != null) {
+            fetchData();
+        }
+
+      }, [dateInsummaryChart,ticker]);
 
     const options = {
-    
-        // title: {
-        //   text: 'My chart title'
-        // },
-        // yAxis: {
-        //   title: {
-        //     text: 'Values'
-        //   }
-        // },
-        // xAxis: {
-        //   categories: ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5']
-        // },
-        // series: [{
-        //   name: 'Series Name',
-        //   data: [1, 3, 2, 4, 3] // Replace this with your actual data
-        // }],
-        // // Additional options go here
+        chart: {
+            type: 'line'
+          },
     
         title: {
             text: ticker.toUpperCase()+ ' Hourly Price Variation',
-            // align: 'left'
         },
       
-        // subtitle: {
-        //     text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
-        //     align: 'left'
-        // },
-      
         yAxis: {
-            // title: {
-            //     text: 'Number of Employees'
-            // }
+            title: {
+                text: null
+            },
+            opposite: true 
+
         },
       
         xAxis: {
-            accessibility: {
-                // rangeDescription: 'Range: 2010 to 2020'
-            }
+            type: 'datetime', 
         },
       
         legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle'
-        },
+            enabled: false 
+          },
       
         plotOptions: {
             series: {
@@ -68,29 +72,10 @@ function SummaryLineChart() {
         },
       
         series: [{
-            // name: 'Installation & Developers',
-            data: [43934, 48656, 65165, 81827, 112143, 142383,
-                171533, 165174, 155157, 161454, 154610],
-                type: 'line',
-                tooltip: {
-                  valueDecimals: 2,
-                },
-            }],
-      
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
+            name: 'Price',
+            data: chartData
+          }],
+
       };
 
   return (

@@ -5,13 +5,15 @@ import Form from '../input/form'
 import BasicDetails from '../basicDetails/basicDetails'
 
 function WholePage( ) {
-  const [stockName, setStockName] = React.useState('');
+  // const [stockName, setStockName] = React.useState('');
 
 
   return (
     <div>
       {/* <NavBar /> */}
-      <Form stockName={stockName} setStockName={setStockName} />
+      <Form />
+      {/* <Form stockName={stockName} setStockName={setStockName} /> */}
+
       {/* <BasicDetails /> */}
     </div>
   );

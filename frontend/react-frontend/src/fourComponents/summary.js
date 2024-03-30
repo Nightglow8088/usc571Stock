@@ -3,7 +3,7 @@ import './summary.css';
 import SummaryLineChart from './summaryLineChart';
 
 
-function Summary({latestPrice,detail,companyPeers}) {
+function Summary({latestPrice,detail,companyPeers,dateInsummaryChart}) {
 
 //   console.log(latestPrice)
 
@@ -32,7 +32,7 @@ function Summary({latestPrice,detail,companyPeers}) {
         </div>
       </div>
       <div className="chart-section">
-        <SummaryLineChart />
+        <SummaryLineChart dateInsummaryChart={dateInsummaryChart}/>
       </div>
     </div>
   );

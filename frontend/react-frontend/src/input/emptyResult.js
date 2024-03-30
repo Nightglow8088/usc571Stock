@@ -3,6 +3,6 @@ import './emptyResult.css'
 
 export default function EmptyResult() {
   return (
-    <div class="notFound">No data found. Please enter a valid Ticker</div>
+    <div className="notFound">No data found. Please enter a valid Ticker</div>
   )
 }

@@ -1,6 +1,7 @@
 import React from 'react'
-import './topNews.css'
 import {Modal} from '@mui/material';
+import './topNews.css'
+
 
 
 export default function TopNews({companyNews}) {
@@ -55,7 +56,7 @@ export default function TopNews({companyNews}) {
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
                         </svg>
                     </button>
-                    <h1 className="modal-title">{newsValue.source}</h1>
+                    <h1 className="modal-title-news">{newsValue.source}</h1>
                     <p className="modal-date">{unixToDate(newsValue.datetime)}</p>
                     <h2 className="modal-headline">{newsValue.headline}</h2>
                     <p className="modal-summary">{newsValue.summary}</p>

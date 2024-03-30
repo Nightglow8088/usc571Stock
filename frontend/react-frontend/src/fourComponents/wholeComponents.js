@@ -9,14 +9,14 @@ import './wholeComponents.css'
 
 
 
-function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,companyInsiderSentiment,recommendationTrends,companyEarnings,companyHistoricalData}) {
+function WholeComponents({ ticker,latestPrice,detail,companyPeers,companyNews,companyInsiderSentiment,recommendationTrends,companyEarnings,companyHistoricalData,dateInsummaryChart}) {
     const [activeComponent, setActiveComponent] = React.useState('summary');
     // console.log(latestPrice)
     // 渲染对应的组件
     const renderComponent = () => {
       switch (activeComponent) {
         case 'summary':
-          return <Summary latestPrice={latestPrice} detail={detail} companyPeers={companyPeers}/>;
+          return <Summary latestPrice={latestPrice} detail={detail} companyPeers={companyPeers} dateInsummaryChart={dateInsummaryChart}/>;
         case 'topNews':
               return <TopNews companyNews={companyNews}/>;
         case 'charts':

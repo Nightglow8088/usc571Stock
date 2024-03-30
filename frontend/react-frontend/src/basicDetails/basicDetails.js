@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, useParams } from 'react-router-dom';
 import {Modal} from '@mui/material';
-import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
+
 
 
 
@@ -26,6 +26,11 @@ export default function BasicDetails() {
     const [companyEarnings, setCompanyEarnings] = React.useState(null);
     const [companyHistoricalData, setCompanyHistoricalData] = React.useState(null);
 
+
+    //summary chart
+    const [dateInsummaryChart, setDateInsummaryChart] = React.useState({ unixStartDate: null, unixEndDate: null });
+
+    //summary chart end 
     
     //value used for mongodb
     //要是存在会存入stock信息
@@ -86,18 +91,77 @@ export default function BasicDetails() {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
 
-    //逻辑应该和想要的有些出入 毕竟下午一点关市场而不是零点
-    function sameDateOrNot (unixTimestamp){
-        const date1 = new Date(unixTimestamp * 1000);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // 将今天的时间设置为午夜12点（开始），确保只比较日期部分
-        if(date1.getFullYear() === today.getFullYear() && date1.getMonth() === today.getMonth() && date1.getDate() === today.getDate()){
-            setMarketOpen(true)
-        }
-        else{
-            setMarketOpen(false)
-        }
+    function printCloseDateTime (unixTimestamp){
+        const date = new Date(unixTimestamp * 1000);
+        const year = date.getFullYear();
+
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        // const hours = date.getHours().toString().padStart(2, '0');
+        // const minutes = date.getMinutes().toString().padStart(2, '0');
+        // const seconds = date.getSeconds().toString().padStart(2, '0');
+        return `${year}-${month}-${day} 13:00:00`;
     }
+
+
+    //逻辑应该和想要的有些出入 毕竟下午一点关市场而不是零点
+    function marketOpenOrNot (unixTimestamp){
+          // 创建日期对象
+        const date = new Date(unixTimestamp * 1000);
+        const dayOfWeek = date.getDay();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+
+
+        let endDate = new Date(date); 
+
+        // 如果是周六或周日，调整到上周五
+        if (dayOfWeek === 0) { 
+            setMarketOpen(false)
+            endDate.setDate(date.getDate() - 2);
+            endDate.setHours(13, 0, 0, 0); 
+            // setDateInsummaryChart(endDate)
+
+        } 
+        else if (dayOfWeek === 6) { 
+            setMarketOpen(false)
+            endDate.setDate(date.getDate() - 1);
+            endDate.setHours(13, 0, 0, 0);
+            // setDateInsummaryChart(endDate)
+        } 
+        else { // 工作日
+            if (hour < 6 || (hour === 6 && minute < 30)) { // 在上午6:30之前
+                setMarketOpen(false)
+
+                endDate.setDate(date.getDate() - 1);
+                endDate.setHours(13, 0, 0, 0);
+                // setDateInsummaryChart(endDate)
+            }
+            else if(hour > 12){
+                setMarketOpen(false)
+
+                endDate.setHours(13, 0, 0, 0);
+                // setDateInsummaryChart(endDate)
+            }
+            else{
+                setMarketOpen(true)
+
+                // setDateInsummaryChart(endDate)
+            }
+
+        }
+
+        let startDate = new Date(endDate);
+        startDate.setDate(endDate.getDate() - 1);
+        const unixEndDate = Math.floor(endDate.getTime() / 1000);
+        const unixStartDate = Math.floor(startDate.getTime() / 1000);
+
+        setDateInsummaryChart({unixStartDate,unixEndDate})
+        // return endDate;
+
+    }
+
+
 
     //这俩是buy和sell按钮控制器
     const handleOpen = () => {
@@ -153,19 +217,19 @@ export default function BasicDetails() {
             setStockExisted({quantity:  parseFloat(inputQuantityNumber)});
         }
         else{
+            // 复制原有状态中的所有字段
             setStockExisted(data => ({
-                ...data, // 复制原有状态中的所有字段
+                ...data, 
                 quantity: data.quantity +  parseFloat(inputQuantityNumber)
             }));
         }
-        console.log(stockExisted)
+        // console.log(stockExisted)
+        setTotalStockCost(0)
 
         setModlaBuyOpen(false)
-        // const apiUrl = ``;
+
         const apiUrl = `${process.env.REACT_APP_API_URL}/dbUpdateStockMoney?ticker=${ticker}&newQuantity=${inputQuantityNumber}&newPrice=${totalStockCost}&companyName=${detail.name}&type=buy`;
-        // const urlWithParams = apiUrl + queryParams;
       
-        // Make the API call
         fetch(apiUrl)
           .then(response => {
             if (!response.ok) {
@@ -213,32 +277,30 @@ export default function BasicDetails() {
         }
         else{
             setStockExisted(data => ({
-                ...data, // 复制原有状态中的所有字段
-                quantity: currentExistedQuantity // 更新quantity字段
+                ...data, 
+                quantity: currentExistedQuantity //更新quantity
             }));
         }
-        console.log(stockExisted)
+        // console.log(stockExisted)
         setModlaSellOpen(false)
+        setTotalSelledStockGet(0)
         // console.log(apiUrl)
 
 
         const apiUrl = `${process.env.REACT_APP_API_URL}/dbSellStockMoney?ticker=${ticker.toUpperCase()}&newQuantity=${inputSellQuantityNumber}&newPrice=${totalSelledStockGet.toFixed(2)}`;
-        // const urlWithParams = apiUrl + queryParams;
-        console.log(apiUrl)
 
+        // console.log(apiUrl)
 
-
-      
         // Make the API call
         fetch(apiUrl)
           .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
+            // if (!response.ok) {
+            //   throw new Error('Network response was not ok');
+            // }
             return response.json();
           })
           .then(data => {
-            console.log(data)
+            // console.log(data)
             setMoney(data)
             setInputSellQuantityNumber(0)
           })
@@ -252,7 +314,7 @@ export default function BasicDetails() {
 
     React.useEffect(() => {
         if(ticker!='home'){
-            console.log("ticker change: "+ticker)
+            // console.log("ticker change: "+ticker)
             const fetchDescription = fetch(`${process.env.REACT_APP_API_URL}/companyDescription?ticker=${ticker}`)
                 .then(response => response.json());
 
@@ -294,7 +356,7 @@ export default function BasicDetails() {
                     companyInsiderSentimentData, recommendationTrendsData,
                     companyEarningsData, companyHistoricalDataData, stockExistedData,
                     moneyData,watchListExistedData]) => {
-                sameDateOrNot(latestPriceData.tradingDay)
+                marketOpenOrNot(latestPriceData.tradingDay)
                 setPositiveChange(latestPriceData.Change>=0)
                 
                 setCompanyPeers(companyPeersData)
@@ -312,15 +374,15 @@ export default function BasicDetails() {
 
             })
             .catch(error => {
-                console.error('Error fetching data:', error);
+                console.error('a lot of api call error', error);
             });
 
         }
       }, [ticker]); 
 
-    if(ticker=='home'){
-        console.log("为home")
-    }
+    // if(ticker=='home'){
+    //     console.log("为home")
+    // }
 
 
 
@@ -330,7 +392,7 @@ export default function BasicDetails() {
         <WholePage />
         {ticker !== 'home' && (
         <>
-            <div className="stock-card">
+            <div className="stock-zone">
 
                 <div className="stock-header">
                     <div>
@@ -344,10 +406,9 @@ export default function BasicDetails() {
                                     <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
                                 </svg>
                             }
-
                             </span>
                     </div>
-                    <span className="stock-name">{detail?.name || null}</span>
+                    <span className="stock-company-name">{detail?.name || null}</span>
                     <div className="stock-exchange">{detail?.exchange || null}</div>
                     <div>
                         <button className="buy-button" onClick={() => handleOpen()}>Buy</button>
@@ -360,7 +421,7 @@ export default function BasicDetails() {
                 <div className="stock-body">
                     <img className="stock-logo" src={detail?.logo || null} alt="Logo"></img>
                     <span className={`market-status ${marketOpen ? 'greenWords' : 'redWords'}`}>
-                        {latestPrice? ( marketOpen ? 'Market is Open' : 'Market closed on ' +unixToDate(latestPrice.tradingDay) ) : null }
+                        {latestPrice? ( marketOpen ? 'Market is Open' : 'Market closed on ' +printCloseDateTime(latestPrice.tradingDay) ) : null }
                     </span>
                 </div>
 
@@ -368,7 +429,7 @@ export default function BasicDetails() {
                     <span className={`current-price ${positiveChange ? 'greenWords' : 'redWords'}`}>{latestPrice?.currentPrice || null}</span>
                     <span className={`price-change ${positiveChange ? 'greenWords' : 'redWords'}`}> {latestPrice?( positiveChange? ("▲" + latestPrice.Change)  : ("▼" + latestPrice.Change) ) : null} ({latestPrice?.percentageChange || null}%)</span>
                     <div className="time-status">
-                    <   span className="timestamp">{latestPrice?unixToDate(Math.round(new Date().getTime()/1000)) : null}</span>
+                    <   span className="timestamp">{latestPrice?unixToDate(latestPrice.tradingDay) : null}</span>
                     </div>
                 </div>
 
@@ -378,7 +439,7 @@ export default function BasicDetails() {
                 <WholeComponents ticker={ticker} latestPrice={latestPrice} detail={detail} companyPeers={companyPeers}
                                 companyNews={companyNews} companyInsiderSentiment={companyInsiderSentiment} 
                                 recommendationTrends={recommendationTrends}  companyEarnings={companyEarnings}
-                                companyHistoricalData={companyHistoricalData} />
+                                companyHistoricalData={companyHistoricalData} dateInsummaryChart={dateInsummaryChart}/>
             </div>        
          </>
         )}
@@ -398,12 +459,7 @@ export default function BasicDetails() {
                     <p>Current Price: ${latestPrice.currentPrice.toFixed(2)}</p>
                     <p>Money in Wallet: ${money.money.toFixed(2)}</p>
                     <div>
-                    {/* <NumberInput
-                        aria-label="Demo number input"
-                        placeholder="Type a number…"
-                        value={inputQuantityNumber}
-                        onChange={(event, val) => setInputQuantityNumber(val)}
-                    /> */}
+ 
                         <label htmlFor="quantity">Quantity: </label>
                         <input type="number" id="quantity" className ="modal-input" name="quantity" min="0" value={inputQuantityNumber} onChange={handleChange}/>
                         {overBudget?

@@ -3,18 +3,17 @@ import Buttons from './buttons.js';
 import FreeSoloCreateOption from './inputForm.js'
 import './form.css'
 
-export default function Form({ stockName, setStockName }) {
-  const [value, setValue] = React.useState('');
+// export default function Form({ stockName, setStockName }) {
+  export default function Form() {
+    const [value, setValue] = React.useState('');
 
 
-  return (
-    <div className="form">
-        <div className="inputArea">
-          <FreeSoloCreateOption value={value} setValue={setValue} />
-        </div>
-        <div className='buttonGroupArea'>
-          <Buttons value={value} stockName={stockName} setStockName={setStockName}/>
-        </div>
-    </div>
+    return (
+      <div className="form">
+          <div className="inputArea">
+            <FreeSoloCreateOption value={value} setValue={setValue} />
+          </div>
+
+      </div>
   )
 }
