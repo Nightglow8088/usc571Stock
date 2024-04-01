@@ -2,3 +2,22 @@
     text-align: center;
     margin-bottom: 20px;
 }
+
+#input-submit{
+    border-left: none;
+    border-right: none;
+    border-color: #e2e5e9;
+
+}
+
+#input-clean{
+    border-left: none;
+    border-color: #e2e5e9;
+
+
+}
+
+#input-text{
+    border-right: none;
+
+}

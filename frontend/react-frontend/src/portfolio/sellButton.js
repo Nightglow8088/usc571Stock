@@ -2,7 +2,7 @@ import React from 'react'
 import {Modal} from '@mui/material';
 
 
-export default function SellButton({portfolioMoney, setPortfolioMoney,setPortfolioData, stock}) {
+export default function SellButton({portfolioMoney, setPortfolioMoney,setPortfolioData, stock,setPortfolioPurchasedOrSelledStock,setPortfolioOpenAlert}) {
 
     const [portfolioSellStatus, setPortfolioSellStatus] = React.useState(false);
 
@@ -41,12 +41,12 @@ export default function SellButton({portfolioMoney, setPortfolioMoney,setPortfol
         const currentExistedQuantity =stock.quantity -  parseFloat(portfolioStockQuantity)
         // let deleteCurrentStock = false
         if(currentExistedQuantity==0){
-            console.log("卖完了 "+currentExistedQuantity)
+            // console.log("卖完了 "+currentExistedQuantity)
             setPortfolioData(currentData => currentData.filter(item => item.ticker !== stock.ticker));
 
         }
         else{
-            console.log("没卖完 "+currentExistedQuantity)
+            // console.log("没卖完 "+currentExistedQuantity)
 
             stock= { ...stock, quantity: currentExistedQuantity, totalPrice: stock.totalPrice - parseFloat(portfolioTotalStockGet) };
 
@@ -55,11 +55,14 @@ export default function SellButton({portfolioMoney, setPortfolioMoney,setPortfol
                     if (item.ticker === stock.ticker) {
                         return stock;
                     }
-                    // Return all other items unchanged
+
                     return item;
                 });
             });
         }
+        setPortfolioOpenAlert(true)
+        setPortfolioPurchasedOrSelledStock({stockName:stock.ticker, type:"sell"})
+
 
 
         const apiUrl = `${process.env.REACT_APP_API_URL}/dbSellStockMoney?ticker=${stock.ticker.toUpperCase()}&newQuantity=${portfolioStockQuantity}&newPrice=${portfolioTotalStockGet.toFixed(2)}`;

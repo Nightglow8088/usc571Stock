@@ -7,6 +7,7 @@ import BasicDetails from './basicDetails/basicDetails'
 import WholePage from './wholePages/wholePages'
 import WatchList from './watchList/watchList';
 import Portfolio from './portfolio/portfolio';
+import Footer from './footer/footer';
 
 
 
@@ -34,7 +35,7 @@ function App() {
       <NavBar />
 
       <Routers/>
-
+      <Footer/>
    </BrowserRouter>
   );
 }

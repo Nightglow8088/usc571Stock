@@ -2,7 +2,7 @@ import React from 'react'
 import {Modal} from '@mui/material';
 
 
-export default function BuyButton({portfolioMoney, setPortfolioMoney,setPortfolioData, stock}) {
+export default function BuyButton({portfolioMoney, setPortfolioMoney,setPortfolioData, stock, setPortfolioPurchasedOrSelledStock,setPortfolioOpenAlert}) {
     // console.log(portfolioMoney)
     // console.log(stock)
     const [portfolioBuyStatus, setPortfolioBuyStatus] = React.useState(false);
@@ -58,6 +58,9 @@ export default function BuyButton({portfolioMoney, setPortfolioMoney,setPortfoli
         setPortfolioTotalStockCost(0)
 
         setPortfolioBuyStatus(false)
+        
+        setPortfolioOpenAlert(true)
+        setPortfolioPurchasedOrSelledStock({stockName:stock.ticker, type:"buy"})
         console.log(stock)
 
         const apiUrl = `${process.env.REACT_APP_API_URL}/dbUpdateStockMoney?ticker=${stock.ticker}&newQuantity=${portfolioStockQuantity}&newPrice=${portfolioTotalStockCost}&companyName=${stock.companyName}&type=buy`;
