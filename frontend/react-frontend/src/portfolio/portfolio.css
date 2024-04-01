@@ -1,0 +1,108 @@
+.portfolio {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .portfolio h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .wallet {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+
+
+  
+  .stock-item {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    /* padding: 10px; */
+    margin-bottom: 20px;
+  }
+
+
+
+
+  .portfolio-header{
+    background-color: rgb(210, 210, 210);
+    margin: 0px;
+    padding: 10px;
+    border-bottom: 1px solid #666;
+  }
+  
+  .stock-item h2 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .stock-item h2 span {
+    font-weight: normal;
+    color: #666;
+  }
+
+
+  .portfolio-body{
+    display: flex;
+    border-bottom: 1px solid #666;
+  }
+
+  .portfolio-body-info{
+    /* padding: 30px; */
+    padding: 20px 30px;
+    width: 40%;
+  }
+
+  .portfolio-body-info-detail{
+    display: flex;
+    justify-content: space-between
+
+
+  }
+  
+ 
+  
+  .change.up {
+    color: green;
+  }
+  
+  .change.down {
+    color: red;
+  }
+  
+  .buy,
+  .sell {
+    padding: 5px 15px;
+    margin-right: 5px;
+  }
+  
+  .buy {
+    background-color: rgb(39, 23, 183);
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .sell {
+    background-color: #dc4433;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .portfolio-tail{
+    display: flex;
+    background-color: rgb(210, 210, 210);
+
+    padding: 5px;
+  }
+
+  .portfolioButtonContainer{
+    margin: 2px 5px;
+  }
+  

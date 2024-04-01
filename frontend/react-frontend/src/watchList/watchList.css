@@ -62,10 +62,20 @@
   .current-price {
     font-size: 1.2rem;
     margin: 0;
-    color: #333;
   }
   
-  .price-change {
-    color: #4CAF50; /* Update color based on positive or negative value */
+
+  .green-color p{
+    color: #47ab4a; 
+  }
+
+  .red-color p{
+    color: red; 
   }
   
+  #watchlist-warning{
+    display: flex;
+    justify-content: center
+
+
+  }

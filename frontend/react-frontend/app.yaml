@@ -1,19 +1,4 @@
-# runtime: nodejs18
-# service: default  # 显式声明这是default服务
-
-
-# handlers:
-# - url: /
-#   static_files: build/index.html
-#   upload: build/index.html
-
-# - url: /(.*)
-#   static_files: build/\1
-#   upload: build/(.*)
-
-
-
-runtime: nodejs18
+runtime: nodejs20
 service: default  
 
 

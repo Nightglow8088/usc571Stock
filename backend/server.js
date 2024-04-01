@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const axios = require('axios');
 const app = express();
 
-const { main ,findCurrentMoney ,updateStockMoney,updateStockMoneySell,tickerExist, findWatchList,insertWatchList,deleteWatchList,existWatchList} = require('./mongodb'); // 确保路径正确
+const { findCurrentMoney ,updateStockMoney,updateStockMoneySell,tickerExist, findWatchList,insertWatchList,deleteWatchList,existWatchList,showAllBuyedStocks} = require('./mongodb'); 
 
 
 const APIKey = "cn3i9ghr01qvutcdcu9gcn3i9ghr01qvutcdcua0"
@@ -22,6 +22,7 @@ const corsOptions ={
 
 app.use(cors(corsOptions)) // Use this after the variable declaration
  
+
 
 
 app.get('/companyDescription', async(req, res) => {
@@ -176,15 +177,15 @@ app.get('/companyEarnings', async(req, res) => {
 
 
 //database mongodb:
-app.get('/dbtest', async (req, res) => {
-  try {
-    await main();
-    res.send('Database operation was successful');
-  } catch (error) {
-    console.error('Database operation failed', error);
-    res.status(500).send('Database operation failed');
-  }
-});
+// app.get('/dbtest', async (req, res) => {
+//   try {
+//     await main();
+//     res.send('Database operation was successful');
+//   } catch (error) {
+//     console.error('Database operation failed', error);
+//     res.status(500).send('Database operation failed');
+//   }
+// });
 
 
 app.get('/dbFindMoney', async (req, res) => {
@@ -289,17 +290,20 @@ app.get('/dbExistWatchList', async (req, res) => {
   }
 });
 
+app.get('/dbShowAllBuyedStocks', async (req, res) => {
 
-
-
-
-
-
-//end
+  try {
+    const result = await showAllBuyedStocks();
+    res.send(result);
+  } catch (error) {
+    console.error('dbShowAllBuyedStocks failed', error);
+    res.status(500).send('dbShowAllBuyedStocks failed');
+  }
+});
 
 const port = process.env.PORT || 3001;
- 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
+
 

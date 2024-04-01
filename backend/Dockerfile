@@ -1,5 +1,5 @@
 # 使用Node.js官方镜像作为基础镜像
-FROM node:14
+FROM node:20
 
 # 设置容器内应用的工作目录
 WORKDIR /app

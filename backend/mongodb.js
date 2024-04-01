@@ -9,24 +9,31 @@ const dbName = "HK3"
 const client = new MongoClient(uri);
 
 
-async function main() {
-    try {
-        // 连接到MongoDB服务器
-        await client.connect();
-        console.log("Connected to MongoDB"); // 连接成功时会打印这条消息
-        // 在这里添加你的数据库操作
-    } catch (e) {
-        console.error(e); // 如果有错误发生，会在这里打印错误信息
-    } 
+let db;
+
+// 连接到MongoDB数据库
+async function connectToDatabase() {
+  if (db) {
+    return db;
+  }
+  
+  try {
+    await client.connect();
+    db = client.db(dbName);
+    console.log("Connected to MongoDB");
+    return db;
+  } catch (e) {
+    console.error("Failed to connect to MongoDB", e);
+    throw e;
+  }
 }
 
 
 async function findCurrentMoney() {
 
     try {
-      await client.connect();
-      const database = client.db(dbName);
-      const collection = database.collection(collectionName);
+      const db = await connectToDatabase();
+      const collection = db.collection(collectionName);
 
       const money = await collection.findOne({ name: 'money' });
       return money; 
@@ -43,10 +50,8 @@ async function updateStockMoney(ticker,newQuantityInt,newPriceInt, companyName) 
 
     try {
       const newTicker = ticker.replace(/\s+/g, '');
-
-      await client.connect();
-      const database = client.db(dbName);
-      const collection = database.collection(collectionName);
+      const db = await connectToDatabase();
+      const collection = db.collection(collectionName);
 
     //   const money = await collection.findOne({ name: 'money' });
       const result = await collection.findOneAndUpdate(
@@ -88,10 +93,9 @@ async function updateStockMoneySell(ticker,newQuantity,newPriceInt) {
 
   try {
     const newTicker = ticker.replace(/\s+/g, '');
+    const db = await connectToDatabase();
 
-    await client.connect();
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
+    const collection = db.collection(collectionName);
 
     // 首先获取当前股票信息
     const currentStock = await collection.findOne({ ticker: newTicker });
@@ -145,9 +149,9 @@ async function tickerExist(ticker) {
 
     try {
       const newTicker = ticker.replace(/\s+/g, '');
-      await client.connect();
-      const database = client.db(dbName);
-      const collection = database.collection(collectionName);
+      const db = await connectToDatabase();
+
+      const collection = db.collection(collectionName);
 
       const result = await collection.findOne({ ticker: newTicker, type:"buyed" });
 
@@ -169,9 +173,9 @@ async function tickerExist(ticker) {
 async function findWatchList() {
 
   try {
-    await client.connect();
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
+    const db = await connectToDatabase();
+
+    const collection = db.collection(collectionName);
 
     const result = collection.find({ type:"watchList" });
 
@@ -190,9 +194,9 @@ async function findWatchList() {
 async function insertWatchList(ticker, companyName) {
 
   try {
-    await client.connect();
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
+    const db = await connectToDatabase();
+
+    const collection = db.collection(collectionName);
 
     const result = await collection.insertOne({
       ticker: ticker,
@@ -214,9 +218,9 @@ async function insertWatchList(ticker, companyName) {
 async function deleteWatchList(ticker) {
 
   try {
-    await client.connect();
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
+    const db = await connectToDatabase();
+
+    const collection = db.collection(collectionName);
 
     const result = await collection.deleteOne({ ticker: ticker, type: "watchList" });
 
@@ -234,9 +238,9 @@ async function existWatchList(ticker) {
 
   try {
     const newTicker = ticker.replace(/\s+/g, '');
-    await client.connect();
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
+    const db = await connectToDatabase();
+
+    const collection = db.collection(collectionName);
 
     const result = await collection.findOne({ ticker: newTicker, type:"watchList" });
 
@@ -255,7 +259,27 @@ async function existWatchList(ticker) {
 }
 
 
+async function showAllBuyedStocks() {
+
+  try {
+    const db = await connectToDatabase();
+
+    const collection = db.collection(collectionName);
+
+    const result = collection.find({ type:"buyed" });
+
+    const resultsArray = await result.toArray();
+
+    return resultsArray; 
+
+  } catch (e) {
+      console.error(e); // 如果有错误发生，会在这里打印错误信息
+  } 
+
+}
+
+
 
 // main().catch(console.error);
 
-module.exports = { main, findCurrentMoney ,updateStockMoney, updateStockMoneySell,tickerExist, findWatchList, insertWatchList,deleteWatchList,existWatchList};
+module.exports = { findCurrentMoney ,updateStockMoney, updateStockMoneySell,tickerExist, findWatchList, insertWatchList,deleteWatchList,existWatchList,showAllBuyedStocks};
