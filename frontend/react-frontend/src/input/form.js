@@ -1,5 +1,5 @@
 import React from 'react'
-import Buttons from './buttons.js';
+// import Buttons from './buttons.js';
 import FreeSoloCreateOption from './inputForm.js'
 import './form.css'
 

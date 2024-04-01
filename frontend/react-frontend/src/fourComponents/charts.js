@@ -19,8 +19,6 @@ export default function Charts({companyHistoricalData,ticker }) {
     }
     const tickerUpperCase = ticker.toUpperCase();
 
-
-
     // console.log(companyHistoricalData)
 
 
@@ -37,7 +35,6 @@ export default function Charts({companyHistoricalData,ticker }) {
 
     const options = {
         chart: {
-
             height:600,
             width: 900, 
         },
@@ -100,7 +97,7 @@ export default function Charts({companyHistoricalData,ticker }) {
             },
             {
                 type: 'vbp',
-                linkedTo: 'stock', 
+                linkedTo: 'stock',
                 params: {
                     volumeSeriesID: 'volume',
                 },
@@ -114,8 +111,6 @@ export default function Charts({companyHistoricalData,ticker }) {
         ],
     };
 
-
-     
 
 
   return (

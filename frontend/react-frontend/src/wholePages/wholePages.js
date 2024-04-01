@@ -1,22 +1,22 @@
-import React from 'react'
+// import React from 'react'
 
-import NavBar from '../navBar/navBar'
-import Form from '../input/form'
-import BasicDetails from '../basicDetails/basicDetails'
+// import NavBar from '../navBar/navBar'
+// import Form from '../input/form'
+// import BasicDetails from '../basicDetails/basicDetails'
 
-function WholePage( ) {
-  // const [stockName, setStockName] = React.useState('');
+// function WholePage( ) {
+//   // const [stockName, setStockName] = React.useState('');
 
 
-  return (
-    <div>
-      {/* <NavBar /> */}
-      <Form />
-      {/* <Form stockName={stockName} setStockName={setStockName} /> */}
+//   return (
+//     <div>
+//       {/* <NavBar /> */}
+//       <Form />
+//       {/* <Form stockName={stockName} setStockName={setStockName} /> */}
 
-      {/* <BasicDetails /> */}
-    </div>
-  );
-}
+//       {/* <BasicDetails /> */}
+//     </div>
+//   );
+// }
 
-export default WholePage;
+// export default WholePage;

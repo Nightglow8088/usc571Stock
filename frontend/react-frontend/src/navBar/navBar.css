@@ -1,8 +1,12 @@
 .navBar{
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: space-between;
     background-color: #2729b3;
-
+}
+.nav-name{
+  margin:10px ;
+  margin-left:30px ;
+  color: white;
 }
 
 .nav-link{
@@ -12,16 +16,16 @@
 
 #watchList .nav-link.active {
     background-color: transparent;
-    border: 1px solid #fff; /* 添加底部边框 */
+    border: 1px solid wheat; 
   }
 
-  #search .nav-link.active {
-    background-color: transparent;
-    border: 1px solid #fff; /* 添加底部边框 */
-  }
+#search .nav-link.active {
+  background-color: transparent;
+  border: 1px solid wheat; 
+}
 
-  #portfolio .nav-link.active {
-    background-color: transparent;
-    border: 1px solid #fff; /* 添加底部边框 */
-  }
+#portfolio .nav-link.active {
+  background-color: transparent;
+  border: 1px solid wheat; 
+}
   

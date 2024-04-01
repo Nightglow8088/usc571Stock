@@ -1,7 +1,7 @@
 import React, { useState } from 'react' 
 import { BrowserRouter, Routes, Route, useParams, Navigate } from 'react-router-dom';
 
-import './App.css';
+// import './App.css';
 import NavBar from './navBar/navBar'
 import BasicDetails from './basicDetails/basicDetails'
 import WholePage from './wholePages/wholePages'
@@ -10,32 +10,23 @@ import Portfolio from './portfolio/portfolio';
 import Footer from './footer/footer';
 
 
-
-function Routers() {
-
-  return (
-    
-    <Routes>
-        <Route path="/" element={<Navigate replace to="/search/home" />} />
-
-        {/* <Route path="/search/home" Component={ WholePage } /> */}
-        <Route path="/search/:ticker" Component={ BasicDetails } />
-        <Route path="/watchlist" element={ <WatchList/> } />
-        <Route path="/portfolio" element={ <Portfolio/> } />
-
-    </Routes>
-  )
-}
-
-
 function App() {
-
+  const [currentSearchTicker, setCurrentSearchTicker] = React.useState('');
   return (
     <BrowserRouter>
-      <NavBar />
+      <div className='app-body'>
+          <NavBar currentSearchTicker={currentSearchTicker}/>
 
-      <Routers/>
-      <Footer/>
+          <Routes>
+            <Route path="/" element={<Navigate replace to="/search/home" />} />
+            <Route path="/search/:ticker" element={ <BasicDetails currentSearchTicker={currentSearchTicker} setCurrentSearchTicker={setCurrentSearchTicker}/> } />
+            <Route path="/watchlist" element={ <WatchList /> } />
+            <Route path="/portfolio" element={ <Portfolio /> } />
+
+        </Routes>
+
+        <Footer/>
+      </div>
    </BrowserRouter>
   );
 }

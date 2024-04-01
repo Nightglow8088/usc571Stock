@@ -4,6 +4,7 @@ import {Modal} from '@mui/material';
 
 
 
+import Form from '../input/form';
 
 import WholeComponents from '../fourComponents/wholeComponents';
 import WholePage from '../wholePages/wholePages';
@@ -14,7 +15,7 @@ import './modalBuys.css'
 
 
 
-export default function BasicDetails() {
+export default function BasicDetails({currentSearchTicker,setCurrentSearchTicker}) {
     
     let { ticker } = useParams();
     const [detail, setDetail] = React.useState(null);
@@ -314,6 +315,7 @@ export default function BasicDetails() {
 
     React.useEffect(() => {
         if(ticker!='home'){
+            setCurrentSearchTicker(ticker)
             // console.log("ticker change: "+ticker)
             const fetchDescription = fetch(`${process.env.REACT_APP_API_URL}/companyDescription?ticker=${ticker}`)
                 .then(response => response.json());
@@ -388,10 +390,11 @@ export default function BasicDetails() {
 
 
   return (
-    <>
-        <WholePage />
+    <div className='basicDetail-container'>
+        <Form />
+        {/* <WholePage /> */}
         {ticker !== 'home' && (
-        <>
+        <div>
             <div className="stock-zone">
 
                 <div className="stock-header">
@@ -441,7 +444,7 @@ export default function BasicDetails() {
                                 recommendationTrends={recommendationTrends}  companyEarnings={companyEarnings}
                                 companyHistoricalData={companyHistoricalData} dateInsummaryChart={dateInsummaryChart}/>
             </div>        
-         </>
+         </div>
         )}
 
 
@@ -520,7 +523,7 @@ export default function BasicDetails() {
 
 
 
-    </>
+    </div>
   )
 }
 

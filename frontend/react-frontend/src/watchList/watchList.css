@@ -2,6 +2,8 @@
     width: 80%;
     margin: 0 auto;
     padding: 20px;
+    min-height: 91vh; 
+
   }
   
   .watchlist-item {
@@ -12,7 +14,7 @@
     border-radius: 4px;
   }
 
-  
+
   .watchlist {
     border-radius: 8px;
     padding: 10px;
