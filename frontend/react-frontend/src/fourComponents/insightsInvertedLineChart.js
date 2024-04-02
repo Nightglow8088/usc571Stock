@@ -4,10 +4,12 @@ import HighchartsReact from 'highcharts-react-official'
 
 
 const generateData = (data) => {
+    const sortedData = data.sort((a, b) => new Date(a.period) - new Date(b.period));
 
-    const categories = data.map(item => `${item.period} Surprise: ${item.surprise}`)
-    const actual = data.map(item => item.actual)
-    const estimate = data.map(item => item.estimate)
+
+    const categories = sortedData.map(item => `${item.period} Surprise: ${item.surprise}`)
+    const actual = sortedData.map(item => item.actual)
+    const estimate = sortedData.map(item => item.estimate)
     
     return {
       categories,actual,estimate

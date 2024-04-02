@@ -42,3 +42,9 @@
 .recommendationCharts{
   display: flex;
 }
+
+@media only screen and (max-width: 390px) {
+  .whole-container{
+    /* max-width: 350px; */
+  }
+}

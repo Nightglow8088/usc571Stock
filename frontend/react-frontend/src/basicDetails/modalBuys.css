@@ -18,6 +18,7 @@
   }
   
   .modal-content {
+    top: 20px;
     background-color: white;
     outline: none;
     border-radius: 4px;

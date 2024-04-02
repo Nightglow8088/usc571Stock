@@ -6,6 +6,8 @@ import HighchartsReact from 'highcharts-react-official'
 const generateData = (data) => {
 
   const sortedData = data.sort((a, b) => new Date(a.period) - new Date(b.period));
+//   const sortedData = data;
+// console.log(data)
   
   const categories = sortedData.map(item => item.period);
   const buy = sortedData.map(item => item.buy);

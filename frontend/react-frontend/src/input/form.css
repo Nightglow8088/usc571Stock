@@ -8,3 +8,11 @@
     /* align-items: stretch;
 } 
 */
+
+@media only screen and (max-width: 390px) {
+    .form .inputArea {
+        
+      max-width: 350px;
+  
+    }
+}

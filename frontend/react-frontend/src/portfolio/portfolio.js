@@ -17,6 +17,7 @@ export default function Portfolio() {
   const [portfolioPurchasedOrSelledStock, setPortfolioPurchasedOrSelledStock] = React.useState({stockName:"" , type:""});
   const [portfolioOpenAlert, setPortfolioOpenAlert] = React.useState(false);
 
+  const [portfolioEmptyData, setPortfolioEmptyData] = React.useState(false);
 
 
   React.useEffect(() => {
@@ -29,6 +30,12 @@ export default function Portfolio() {
 
         const responseStock = await fetch(`${process.env.REACT_APP_API_URL}/dbShowAllBuyedStocks`);
         const stocksData = await responseStock.json();
+
+        if(stocksData.length==0){
+          console.log(stocksData.length)
+          setPortfolioEmptyData(true)
+          return;
+        }
         
 
         updatePrices(stocksData);
@@ -61,6 +68,21 @@ export default function Portfolio() {
     fetchPurchaseStock();
 
   }, []);
+
+
+  React.useEffect(() => {
+    if(portfolioData.length==0){
+      setPortfolioEmptyData(true)
+    }
+    else{
+      setPortfolioEmptyData(false)
+
+    }
+  }, [portfolioData]);
+
+
+
+
 
   const handleColorChange = (change) => {
     if (change > 0) return 'green';
@@ -117,6 +139,16 @@ export default function Portfolio() {
       <div className="portfolio-title">
         <h1>My Portfolio</h1>
         <p className="portfolio-wallet">Money in Wallet: ${portfolioMoney.toFixed(2)}</p>
+        {!portfolioEmptyData?
+          null
+          :
+          <div >
+            <div className="alert alert-warning" role="alert">
+              Currently you don't have any stock
+            </div>
+          </div>
+
+          }
       </div>
 
       {portfolioData.length>0 ?(
@@ -132,26 +164,30 @@ export default function Portfolio() {
             <div className='portfolio-header'>
               <h2>{stock.ticker} <span>{stock.companyName}</span></h2>
             </div>
-            <div className="portfolio-body">
-              <div className="portfolio-body-info">
-                <div className="portfolio-body-info-detail"><span>Quantity: </span> <span>{stock.quantity.toFixed(2)}</span></div>
-                <div className="portfolio-body-info-detail"><span>Avg.Cost / Share: </span>  <span>{handleAverageCost(stock.totalPrice,stock.quantity)}</span></div>
-                <div className="portfolio-body-info-detail"> <span>Total Cost: </span> <span>{stock.totalPrice.toFixed(2)}</span></div>
-              </div>
+              <div>
+                <div className="portfolio-body">
+                  <div className="portfolio-body-info">
+                    <div className="portfolio-body-info-detail"><span>Quantity: </span> <span>{stock.quantity.toFixed(2)}</span></div>
+                    <div className="portfolio-body-info-detail"><span>Avg.Cost / Share: </span>  <span>{handleAverageCost(stock.totalPrice,stock.quantity)}</span></div>
+                    <div className="portfolio-body-info-detail"> <span>Total Cost: </span> <span>{stock.totalPrice.toFixed(2)}</span></div>
+                  </div>
 
-              <div className="portfolio-body-info">
-                <div className="portfolio-body-info-detail">
-                  <span>Change:</span> <span style={{ color: color }}> {handleChangeTriangle(changeValue)}  {changeValue}</span>
+                  <div className="portfolio-body-info">
+                    <div className="portfolio-body-info-detail">
+                      <span>Change:</span> <span style={{ color: color }}> {handleChangeTriangle(changeValue)}  {changeValue}</span>
+                    </div>
+                    <div className="portfolio-body-info-detail"> <span>Current Price: </span> <span style={{ color: color }}>{stock.price}</span></div>
+                    <div className="portfolio-body-info-detail"> <span>Market Value: </span> <span style={{ color: color }}>{handleMarketValue(stock.price,stock.quantity)}</span></div>
+                  </div>
                 </div>
-                <div className="portfolio-body-info-detail"> <span>Current Price: </span> <span style={{ color: color }}>{stock.price}</span></div>
-                <div className="portfolio-body-info-detail"> <span>Market Value: </span> <span style={{ color: color }}>{handleMarketValue(stock.price,stock.quantity)}</span></div>
+                <div className="portfolio-tail">
+                  <BuyButton portfolioMoney={portfolioMoney} setPortfolioMoney ={setPortfolioMoney} setPortfolioData={setPortfolioData} stock={stock} setPortfolioPurchasedOrSelledStock={setPortfolioPurchasedOrSelledStock} setPortfolioOpenAlert={setPortfolioOpenAlert}/>
+                  <SellButton portfolioMoney={portfolioMoney} setPortfolioMoney ={setPortfolioMoney} setPortfolioData={setPortfolioData} stock={stock} setPortfolioPurchasedOrSelledStock={setPortfolioPurchasedOrSelledStock} setPortfolioOpenAlert={setPortfolioOpenAlert}/>
+                </div>
               </div>
-            </div>
-            <div className="portfolio-tail">
-              <BuyButton portfolioMoney={portfolioMoney} setPortfolioMoney ={setPortfolioMoney} setPortfolioData={setPortfolioData} stock={stock} setPortfolioPurchasedOrSelledStock={setPortfolioPurchasedOrSelledStock} setPortfolioOpenAlert={setPortfolioOpenAlert}/>
-              <SellButton portfolioMoney={portfolioMoney} setPortfolioMoney ={setPortfolioMoney} setPortfolioData={setPortfolioData} stock={stock} setPortfolioPurchasedOrSelledStock={setPortfolioPurchasedOrSelledStock} setPortfolioOpenAlert={setPortfolioOpenAlert}/>
-            </div>
+ 
           </div>
+
         );
       })
       ):null}

@@ -60,7 +60,7 @@ export default function Insights({companyInsiderSentiment, recommendationTrends,
       }, [companyInsiderSentiment]);
 
   return (
-    <>
+    <div className="whole-container">
     {(companyInsiderSentiment && name)? (
 
       <div className="container">
@@ -110,6 +110,6 @@ export default function Insights({companyInsiderSentiment, recommendationTrends,
 
     ) : null
     }
-    </>
+    </div>
   )
 }

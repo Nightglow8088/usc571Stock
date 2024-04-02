@@ -4,6 +4,7 @@
 
 .stock-zone {
     display: flex;
+    max-width: 100%; /* Ensure it does not exceed the container width */
 
     justify-content: center;
     align-items: center;
@@ -112,4 +113,23 @@
 
 .redWords{
   color: red;
+}
+
+.stock-warning-part{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+@media only screen and (max-width: 390px) {
+  .stock-zone {
+    max-width: 350px;
+    padding: 0 ; /* Adjust padding to ensure content fits within the screen */
+
+  }
+
+  .stock-header .stock-body .stock-price{
+
+    margin: 0;
+  }
 }

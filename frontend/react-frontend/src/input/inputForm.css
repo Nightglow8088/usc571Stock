@@ -21,3 +21,11 @@
     border-right: none;
 
 }
+
+@media only screen and (max-width: 390px) {
+    .inputform-container .input-group{
+        
+      max-width: 350px;
+  
+    }
+}

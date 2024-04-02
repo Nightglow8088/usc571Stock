@@ -86,7 +86,7 @@ function FreeSoloCreateOption({ value, setValue }) {
 
 
   return (
-    <div>
+    <div className="inputform-container">
         <h2 className='inputForm-title'>Stock Search</h2>
         <Autocomplete
         value={value}
@@ -102,7 +102,7 @@ function FreeSoloCreateOption({ value, setValue }) {
         sx={{ width: 700 }}
         freeSolo
         renderInput={(params) => (
-            <>
+            // <>
                 <div ref={params.InputProps.ref} className="input-group">
                     <input {...params.inputProps} 
                         id="input-text"
@@ -119,7 +119,7 @@ function FreeSoloCreateOption({ value, setValue }) {
                         </svg>
                     </button>
                 </div>
-            </>
+            // </>
 
 
         )}

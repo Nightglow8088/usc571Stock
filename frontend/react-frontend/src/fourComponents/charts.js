@@ -21,16 +21,44 @@ export default function Charts({companyHistoricalData,ticker }) {
 
     // console.log(companyHistoricalData)
 
+    const groupingUnits = [[
+        'week',                         // unit name
+        [1]                             // allowed multiples
+    ], [
+        'month',
+        [1, 2, 3, 4, 6]
+    ]];
 
-    const candlestickData = companyHistoricalData.map(item => ({
-        x: item.date,
-        open: item.openPrice,
-        high: item.highPrice,
-        low: item.lowPrice,
-        close: item.closePrice
-    }));
+    let ohlc = [];
+    let volume = [];
+  
+    for (let i = 0; i < companyHistoricalData.length; i += 1) {
+      let dataPoint = companyHistoricalData[i];
+  
+      ohlc.push([
+        dataPoint.date, 
+        dataPoint.openPrice, 
+        dataPoint.highPrice, 
+        dataPoint.lowPrice, 
+        dataPoint.closePrice 
+      ]);
+  
+      volume.push([
+        dataPoint.date, 
+        dataPoint.volume 
+      ]);
+    }
 
-    const volumeData = companyHistoricalData.map(item => [item.date, item.volume]);
+
+    // const candlestickData = companyHistoricalData.map(item => ({
+    //     x: item.date,
+    //     open: item.openPrice,
+    //     high: item.highPrice,
+    //     low: item.lowPrice,
+    //     close: item.closePrice
+    // }));
+
+    // const volumeData = companyHistoricalData.map(item => [item.date, item.volume]);
 
 
     const options = {
@@ -76,18 +104,25 @@ export default function Charts({companyHistoricalData,ticker }) {
             offset: 0,
             lineWidth: 2
         }],
+        plotOptions: {
+            series: {
+                dataGrouping: {
+                    units: groupingUnits
+                }
+            }
+        },
         series: [
             {
                 id: 'stock', 
                 type: 'candlestick',
                 name: tickerUpperCase+' Stock Price',
-                data: candlestickData,
+                data: ohlc,
             },
             {
                 id: 'volume',
                 type: 'column',
                 name: 'Volume',
-                data: volumeData,
+                data: volume,
                 yAxis: 1,
             },
             {
